@@ -57,7 +57,7 @@ int flag_last_record_used = 0;
 int fork_record_length = 0;
 
 char current_import_module[256] = "";
-
+char tmp_fake_object[512] = "";
 DWORD pid;
 
 int fork_counter = 0;
@@ -459,13 +459,13 @@ int dump_pair_disk(PyObject *name, PyObject *value){
     char filename[MAX_PATH] = "";
     sprintf(filename,"%s%s-%lu-%d.txt",object_dump_folder,"var",pid,mergeline);
     FILE *tmpfile_dump_obj = fopen(filename,"a");
-    char var_name[256] = "";
-    char value_name[256] = "";
+    char var_name[4096] = "";
+    char value_name[4096] = "";
     get_object_name(name,var_name);
     get_object_name(value,value_name);
     fprintf(tmpfile_dump_obj,"[%d]  :  %s  :  %s\n",current_lineno,var_name,value_name);
     fclose(tmpfile_dump_obj);
-    //printf("dump_pair_disk out\n");
+    //printf("dump_pair_disk out: %s:%s\n",var_name,value_name);
     return 1;
 }
 
@@ -722,7 +722,7 @@ void branch_cut(){
             // if(pFile2 == NULL){
             //     printf("[%")
             // }
-            fprintf(pFile2,"[%5lu] exit() in %d\n",pid,last_line_main);
+            fprintf(pFile2,"[%5lu] exit() in %d   mergeline is: %d\n",pid,last_line_main,mergeline);
             int lineno = 0;
             int search_lineno = 0;
             fprintf(pFile2,"[%5lu]: Coverage: ",pid);

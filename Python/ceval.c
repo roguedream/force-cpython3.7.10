@@ -1106,6 +1106,12 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             check_scope(f,opcode);
             //test instru ends
             PyObject *value = POP();
+            //test instru begins
+            if(core_main_file_flag){
+                PyObject *tmp_var_name = PyTuple_GET_ITEM(co->co_varnames, oparg);
+                dump_pair_disk(tmp_var_name,value);
+            }
+            //test instru ends
             SETLOCAL(oparg, value);
             FAST_DISPATCH();
         }
@@ -1450,10 +1456,17 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *res = PyObject_GetItem(container, sub);
             //test instru begins
             if(core_main_file_flag){
-                if(res == NULL){
+                get_object_name(container,obj_name);
+                if(strstr(obj_name,"FakeObject")){
+                    printf("[debug log] BINARY_SUBSCR uses fake object in %s:%d\n",current_file,current_lineno);
+                    res = PyUnicode_FromString("FakeObject");
+                }
+                else if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_SUBSCR error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    sprintf_s(tmp_fake_object,512,"FakeObject_%s[]",obj_name);
+                    res = PyUnicode_FromString(tmp_fake_object);
+                    tmp_fake_object[0] = '\0';
                 }
             }
             //test instru ends
@@ -2249,6 +2262,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *name = GETITEM(names, oparg);
             PyObject *v = POP();
             PyObject *ns = f->f_locals;
+            //test instru begins
+            if(core_main_file_flag){
+                //printf("we begin dump\n");
+                dump_pair_disk(name,v);
+                //printf("we stop dump\n");
+            }
+            //test instru ends
             int err;
             if (ns == NULL) {
                 PyErr_Format(PyExc_SystemError,
@@ -2392,6 +2412,11 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             PyObject *name = GETITEM(names, oparg);
             PyObject *v = POP();
+            //test instru begins
+            if(core_main_file_flag){
+                dump_pair_disk(name,v);
+            }
+            //test instru ends
             int err;
             err = PyDict_SetItem(f->f_globals, name, v);
             Py_DECREF(v);
@@ -2645,6 +2670,12 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *v = POP();
             PyObject *cell = freevars[oparg];
             PyObject *oldobj = PyCell_GET(cell);
+            //test instru
+            if(strstr(current_file,name_main_file)){
+                PyObject *tmp_name = PyUnicode_FromString("UnknownDEREF Variable");
+                dump_pair_disk(tmp_name,v);
+            }
+            //test instru ends
             PyCell_SET(cell, v);
             Py_XDECREF(oldobj);
             DISPATCH();
@@ -3170,36 +3201,71 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *cond = POP();
             int err;
             //test instru begins
-            if(flag_main_file){
+            if(core_main_file_flag){
                 int offset = INSTR_OFFSET();
-                int line_number = PyFrame_GetLineNumber(f);
-                if(core_main_file_flag){
-                    int target_lineno = PyCode_Addr2Line(f->f_code,oparg);
-                    //printf("[debug log] in %d %s:%d\n",opcode,current_file,current_lineno);
-                    if(target_lineno > line_number + 1 || oparg < f->f_lasti){
-                        cond = Py_False;
-                        int tmp_cond;
-                        if(PyObject_IsTrue(cond)){
-                            tmp_cond = 1;
-                        }
-                        else{
-                            tmp_cond = 0;
-                        }
-                        int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
-                        if(tmp_rec == -1){
-                            int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
-                        }
-                        if (tmp_rec == 1){
-                            cond = Py_True;
-                        }
-                        if (tmp_rec == 0){
-                            cond = Py_False;
-                        }
+                int target_lineno = PyCode_Addr2Line(f->f_code,oparg);
+                int tmp_cond;
+                if(target_lineno < current_lineno){
+                    cond = Py_True;
+                    tmp_cond = 1;
+                    int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
+                    if(tmp_rec == -1){
+                        int tmp_fork_flag = fork(current_lineno + 1);
                     }
-                    else{
+                    else if(tmp_rec == 1){
                         cond = Py_True;
                     }
+                    else{
+                        cond = Py_False;
+                    }
                 }
+                else if(target_lineno == current_lineno){
+                    cond = Py_True;
+                }
+                else{
+                    cond = Py_False;
+                    tmp_cond = 1;
+                    int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
+                    if(tmp_rec == -1){
+                        int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
+                    }
+                    else if(tmp_rec == 1){
+                        cond = Py_True;
+                    }
+                    else{
+                        cond = Py_False;
+                    }
+                }
+            //     if(core_main_file_flag){
+            //         int target_lineno = PyCode_Addr2Line(f->f_code,oparg);
+            //         //printf("[debug log] in %d %s:%d\n",opcode,current_file,current_lineno);
+            //         if(target_lineno > line_number + 1 || oparg < f->f_lasti){
+            //             cond = Py_False;
+            //             int tmp_cond;
+            //             if(PyObject_IsTrue(cond)){
+            //                 tmp_cond = 1;
+            //             }
+            //             else{
+            //                 tmp_cond = 0;
+            //             }
+            //             int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
+            //             if(tmp_rec == -1){
+            //                 int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
+            //             }
+            //             if (tmp_rec == 1){
+            //                 printf("[%5lu] cond is set to be true: %d\n",pid,current_lineno);
+            //                 cond = Py_True;
+            //             }
+            //             if (tmp_rec == 0){
+            //                 printf("[%5lu] cond is set to be false: %d\n",pid, current_lineno);
+            //                 cond = Py_False;
+            //             }
+            //         }
+            //         else{
+            //             printf("[%5lu] cond is moving backward: %d\n",pid,current_lineno);
+            //             cond = Py_True;
+            //         }
+            //     }
             }
             //test instru ends
             if (cond == Py_True) {
@@ -3813,6 +3879,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PUSH(res);
             //test instru begins
             if(core_main_file_flag){
+                //printf("flag call function from main set to 0\n");
                 flag_call_function_from_main = 0;
             }
             //test instru ends
@@ -3848,6 +3915,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
 
             //test instru begins
             if(core_main_file_flag){
+                //printf("flag call function from main set to 0\n");
                 flag_call_function_from_main = 0;
             }
             //test instru ends
@@ -3885,6 +3953,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             Py_DECREF(names);
             //test instru begins
             if(core_main_file_flag){
+                //printf("flag call function from main set to 0\n");
                 flag_call_function_from_main = 0;
             }
             //test instru ends
@@ -3956,6 +4025,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             SET_TOP(result);
             //test instru begins
             if(core_main_file_flag){
+                //printf("flag call function from main set to 0\n");
                 flag_call_function_from_main = 0;
             }
             //test instru ends
@@ -5348,7 +5418,7 @@ call_function(PyObject ***pp_stack, Py_ssize_t oparg, PyObject *kwnames)
         if(arg_num > 0){
             Py_ssize_t tmp_count = (Py_ssize_t)0;
             while(tmp_count < arg_num){
-                char arg[512]="";
+                char arg[40960]="";
                 get_object_name(stack[tmp_count],arg);
                 strcat(arg_full,arg);
                 strcat(arg_full," ");
@@ -5369,6 +5439,14 @@ call_function(PyObject ***pp_stack, Py_ssize_t oparg, PyObject *kwnames)
             obj_name[0] = '\0';
             return tmp_ret_obj;
         }
+        else if (strstr(func_name,"built-in function input")){
+            printf("[debug log] Input() is called in %s:%d, we directly return fake object\n",current_file,current_lineno);
+            sprintf_s(obj_name,512,"RET_%s","FakeObject_input");
+            PyObject *tmp_ret_obj = PyUnicode_FromString(obj_name);
+            obj_name[0] = '\0';
+            return tmp_ret_obj;
+        }
+        
 
     }
     //test instru ends
