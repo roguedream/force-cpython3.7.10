@@ -1078,6 +1078,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             check_scope(f,opcode);
             //test instru ends
             PyObject *value = GETLOCAL(oparg);
+
+            //test instru 
+            if(core_main_file_flag && (value == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                value = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             if (value == NULL) {
                 format_exc_check_arg(PyExc_UnboundLocalError,
                                      UNBOUNDLOCAL_ERROR_MSG,
@@ -1179,6 +1187,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             PyObject *value = TOP();
             PyObject *res = PyNumber_Positive(value);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(value);
             SET_TOP(res);
             if (res == NULL)
@@ -1192,6 +1207,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             PyObject *value = TOP();
             PyObject *res = PyNumber_Negative(value);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(value);
             SET_TOP(res);
             if (res == NULL)
@@ -1226,6 +1248,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             PyObject *value = TOP();
             PyObject *res = PyNumber_Invert(value);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(value);
             SET_TOP(res);
             if (res == NULL)
@@ -1245,7 +1274,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (res == NULL)){
                 PyErr_Clear();
                 printf("[debug log] BINARY_POWER failed in %s:%d\n",current_file,current_lineno);
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1269,7 +1298,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (res == NULL)){
                 PyErr_Clear();
                 printf("[debug log] BINARY_MULTIPLY failed in %s:%d\n",current_file,current_lineno);
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1293,7 +1322,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (res == NULL)){
                 PyErr_Clear();
                 printf("[debug log] BINARY_MATRIX_MULTIPLY failed in %s:%d\n",current_file,current_lineno);
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1317,7 +1346,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (quotient == NULL)){
                 printf("[debug log] BINARY_TRUE_DIVIDE failed in %s:%d\n",current_file,current_lineno);
                 PyErr_Clear();
-                quotient = PyUnicode_FromString("FakeObject");
+                quotient = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1341,7 +1370,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (quotient == NULL)){
                 printf("[debug log] BINARY_FLOOR_DIVIDE failed in %s:%d\n",current_file,current_lineno);
                 PyErr_Clear();
-                quotient = PyUnicode_FromString("FakeObject");
+                quotient = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1373,7 +1402,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (res == NULL)){
                 PyErr_Clear();
                 printf("[debug log] BINARY_MODULO failed in %s:%d\n",current_file,current_lineno);
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1412,7 +1441,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (sum == NULL)){
                 PyErr_Clear();
                 printf("[debug log] BINARY_ADD failed in %s:%d\n",current_file,current_lineno);
-                sum = PyUnicode_FromString("FakeObject");
+                sum = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1435,7 +1464,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(core_main_file_flag && (diff == NULL)){
                 PyErr_Clear();
                 printf("[debug log] BINARY_SUBTRACT failed in %s:%d\n",current_file,current_lineno);
-                diff = PyUnicode_FromString("FakeObject");
+                diff = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -1459,13 +1488,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 get_object_name(container,obj_name);
                 if(strstr(obj_name,"FakeObject")){
                     printf("[debug log] BINARY_SUBSCR uses fake object in %s:%d\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    res = new_FakeObject_str("");
                 }
                 else if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_SUBSCR error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    sprintf_s(tmp_fake_object,512,"FakeObject_%s[]",obj_name);
-                    res = PyUnicode_FromString(tmp_fake_object);
+                    sprintf_s(tmp_fake_object,512,"%s[]",obj_name);
+                    res = new_FakeObject_str(tmp_fake_object);
                     tmp_fake_object[0] = '\0';
                 }
             }
@@ -1490,7 +1519,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_LSHIFT error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    res = new_FakeObject_str("");
                 }
             }
             //test instru ends
@@ -1514,7 +1543,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_RSHIFT error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    res = new_FakeObject_str("");
                 }
             }
             //test instru ends
@@ -1538,7 +1567,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_AND error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    res = new_FakeObject_str("");
                 }
             }
             //test instru ends
@@ -1562,7 +1591,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_XOR error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    res = new_FakeObject_str("");
                 }
             }
             //test instru ends
@@ -1586,7 +1615,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 if(res == NULL){
                     PyErr_Clear();
                     printf("[debug log] BINARY_OR error in %s:%d, FakeObject is provided\n",current_file,current_lineno);
-                    res = PyUnicode_FromString("FakeObject");
+                    res = new_FakeObject_str("");
                 }
             }
             //test instru ends
@@ -1606,6 +1635,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *list = PEEK(oparg);
             int err;
             err = PyList_Append(list, v);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
             Py_DECREF(v);
             if (err != 0)
                 goto error;
@@ -1621,6 +1657,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *set = PEEK(oparg);
             int err;
             err = PySet_Add(set, v);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
             Py_DECREF(v);
             if (err != 0)
                 goto error;
@@ -1635,6 +1678,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *exp = POP();
             PyObject *base = TOP();
             PyObject *res = PyNumber_InPlacePower(base, exp, Py_None);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(base);
             Py_DECREF(exp);
             SET_TOP(res);
@@ -1665,6 +1715,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *res = PyNumber_InPlaceMatrixMultiply(left, right);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(res);
@@ -1680,6 +1737,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *divisor = POP();
             PyObject *dividend = TOP();
             PyObject *quotient = PyNumber_InPlaceTrueDivide(dividend, divisor);
+            //test instru 
+            if(core_main_file_flag && (quotient == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                quotient = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(dividend);
             Py_DECREF(divisor);
             SET_TOP(quotient);
@@ -1695,6 +1759,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *divisor = POP();
             PyObject *dividend = TOP();
             PyObject *quotient = PyNumber_InPlaceFloorDivide(dividend, divisor);
+            //test instru 
+            if(core_main_file_flag && (quotient == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                quotient = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(dividend);
             Py_DECREF(divisor);
             SET_TOP(quotient);
@@ -1710,6 +1781,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *mod = PyNumber_InPlaceRemainder(left, right);
+            //test instru 
+            if(core_main_file_flag && (mod == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                mod = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(mod);
@@ -1733,6 +1811,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 sum = PyNumber_InPlaceAdd(left, right);
                 Py_DECREF(left);
             }
+            //test instru 
+            if(core_main_file_flag && (sum == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                sum = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(right);
             SET_TOP(sum);
             if (sum == NULL)
@@ -1747,6 +1832,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *diff = PyNumber_InPlaceSubtract(left, right);
+            //test instru 
+            if(core_main_file_flag && (diff == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                diff = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(diff);
@@ -1762,6 +1854,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *res = PyNumber_InPlaceLshift(left, right);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(res);
@@ -1777,6 +1876,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *res = PyNumber_InPlaceRshift(left, right);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(res);
@@ -1792,6 +1898,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *res = PyNumber_InPlaceAnd(left, right);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(res);
@@ -1807,6 +1920,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *res = PyNumber_InPlaceXor(left, right);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(res);
@@ -1822,6 +1942,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *right = POP();
             PyObject *left = TOP();
             PyObject *res = PyNumber_InPlaceOr(left, right);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",pid,get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             Py_DECREF(left);
             Py_DECREF(right);
             SET_TOP(res);
@@ -1841,6 +1968,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             STACKADJ(-3);
             /* container[sub] = v */
             err = PyObject_SetItem(container, sub, v);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
             Py_DECREF(v);
             Py_DECREF(container);
             Py_DECREF(sub);
@@ -1859,6 +1993,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             STACKADJ(-2);
             /* del container[sub] */
             err = PyObject_DelItem(container, sub);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
             Py_DECREF(container);
             Py_DECREF(sub);
             if (err != 0)
@@ -1874,6 +2015,13 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *value = POP();
             PyObject *hook = _PySys_GetObjectId(&PyId_displayhook);
             PyObject *res;
+            //test instru 
+            if(core_main_file_flag && hook == NULL){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                hook = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
             if (hook == NULL) {
                 PyErr_SetString(PyExc_RuntimeError,
                                 "lost sys.displayhook");
@@ -1881,6 +2029,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 goto error;
             }
             res = PyObject_CallFunctionObjArgs(hook, value, NULL);
+            //test instru 
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                res = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
+
             Py_DECREF(value);
             if (res == NULL)
                 goto error;
@@ -2265,7 +2421,12 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru begins
             if(core_main_file_flag){
                 //printf("we begin dump\n");
+				PyObject_Print(name, stdout, 0);
+				printf("\n");
+				PyObject_Print(v, stdout, 0);
+				printf("\n");
                 dump_pair_disk(name,v);
+				
                 //printf("we stop dump\n");
             }
             //test instru ends
@@ -2299,6 +2460,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 goto error;
             }
             err = PyObject_DelItem(ns, name);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
+
             if (err != 0) {
                 format_exc_check_arg(PyExc_NameError,
                                      NAME_ERROR_MSG,
@@ -2341,7 +2510,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                     printf("[debug log] UNPACK_SEQUENCE: %d failed in %s:%d, we ignore\n",oparg,current_file,current_lineno);
                     PyErr_Clear();
                     while (oparg--) {
-                        item = PyUnicode_FromString("FakeObject");
+                        item = new_FakeObject_str("");
                         Py_INCREF(item);
                         PUSH(item);
                     }
@@ -2385,6 +2554,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             int err;
             STACKADJ(-2);
             err = PyObject_SetAttr(owner, name, v);
+            if(core_main_file_flag && (err !=0) && is_FakeObject(owner)){
+                PyErr_Clear();
+                err = 0;
+                int dict_flag = FakeObject_setattr(owner,name,v);
+                // PyObject_Print(name,stdout,0);
+                // PyObject_Print(owner,stdout,0);
+                printf("[debug log] STORE_ATTR error\n");
+            }
             Py_DECREF(v);
             Py_DECREF(owner);
             if (err != 0)
@@ -2400,6 +2577,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *owner = POP();
             int err;
             err = PyObject_SetAttr(owner, name, (PyObject *)NULL);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
+
             Py_DECREF(owner);
             if (err != 0)
                 goto error;
@@ -2419,6 +2604,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             int err;
             err = PyDict_SetItem(f->f_globals, name, v);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
+
             Py_DECREF(v);
             if (err != 0)
                 goto error;
@@ -2432,6 +2625,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *name = GETITEM(names, oparg);
             int err;
             err = PyDict_DelItem(f->f_globals, name);
+            //test instru 
+            if(core_main_file_flag && (err != 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                err = 0;
+            }
+            //test instru ends
+
             if (err != 0) {
                 format_exc_check_arg(
                     PyExc_NameError, NAME_ERROR_MSG, name);
@@ -2473,15 +2674,8 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                         if (v == NULL) {
                             //test instru begins
                             if(core_main_file_flag){
-                                // PyCodeObject *test_code_object = PyCode_NewEmpty("fake_file","FakeObject",1);
-                                // PyObject *test_dict_object = PyDict_New();
-                                // PyFunctionObject *test_fake_object = PyFunction_New(test_code_object,test_dict_object);
-                                // v = test_fake_object;
-                                char tmp_name[256];
-                                get_object_name(name,tmp_name);
-                                sprintf_s(obj_name,512,"FakeObject_%s",tmp_name);
-                                v = PyUnicode_FromString(obj_name);
-                                
+                                get_object_name(name,obj_name);
+                                v = new_FakeObject(name);
                                 PyObject *tmp_dict = f->f_globals;
                                 int err;
                                 if (PyDict_CheckExact(tmp_dict)){
@@ -2491,10 +2685,9 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                                     err = PyObject_SetItem(tmp_dict, name, v);
                                 }
                                 // add object to local dict
-                                printf("[debug log] we get undefined variable: %s. It could be a force object. We create fake object: %s in %s:%d\n",tmp_name,obj_name,current_file,current_lineno);
+                                printf("[debug log] we get undefined variable: %s. It could be a force object. We create fake object in %s:%d\n",obj_name,current_file,current_lineno);
                                 obj_name[0] = '\0';
                                 PUSH(v);
-                                
                                 DISPATCH();
                             }
                             //test instru ends
@@ -2575,6 +2768,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             check_scope(f,opcode);
             //test instru ends
             PyObject *v = GETLOCAL(oparg);
+
             if (v != NULL) {
                 SETLOCAL(oparg, NULL);
                 DISPATCH();
@@ -2654,6 +2848,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             PyObject *cell = freevars[oparg];
             PyObject *value = PyCell_GET(cell);
+            //test instru 
+            if(core_main_file_flag && (value == 0)){
+                PyErr_Clear();
+                printf("[%5lu debug log] %s error",get_opcode_name(opcode));
+                value = PyUnicode_FromString("FakeObject");
+            }
+            //test instru ends
+
             if (value == NULL) {
                 format_exc_unbound(co, oparg);
                 goto error;
@@ -3054,6 +3256,20 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             PyObject *name = GETITEM(names, oparg);
             PyObject *owner = TOP();
             PyObject *res = PyObject_GetAttr(owner, name);
+            //test instru begins
+            if(core_main_file_flag && (res == NULL) && is_FakeObject(owner)){
+                PyErr_Clear();
+                res = FakeObject_getattr(owner,name);
+                //PyObject_Print(res,stdout,0);
+                //printf("\n");
+                // PyObject_Print(owner,stdout,0);
+                printf("[debug log] LOAD_ATTR error\n");
+            }
+            if(core_main_file_flag && (res == NULL)){
+                PyErr_Clear();
+                res = new_FakeObject(name);
+            }
+            //test instru ends
             Py_DECREF(owner);
             SET_TOP(res);
             if (res == NULL)
@@ -3102,7 +3318,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if(res == NULL && !strcmp(current_import_module,module_name)){
                 PyErr_Clear();
                 sprintf_s(obj_name,512,"FakeObject_%s",current_import_module);
-                res = PyUnicode_FromString(obj_name);
+                res = new_FakeObject_str(current_import_module);
                 printf("[debug log] IMPORT_NAME:%s failed in %s:%d, we return %s\n",module_name,current_file,current_lineno,obj_name);
                 obj_name[0] = '\0';
                 current_import_module[0] = '\0';
@@ -3170,7 +3386,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 get_object_name(from,module_name);
                 if(strstr(module_name,"FakeObject")){
                     sprintf_s(obj_name,512,"%s.%s",module_name,object_name);
-                    res = PyUnicode_FromString(obj_name);
+                    res = new_FakeObject_str(obj_name);
                     printf("[debug log] IMPORT_FROM get a fake module in %s:%d, we return %s\n",current_file,current_lineno,obj_name);
                     obj_name[0] = '\0';
                     PUSH(res);
@@ -3224,7 +3440,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 }
                 else{
                     cond = Py_False;
-                    tmp_cond = 1;
+                    tmp_cond = 0;
                     int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
                     if(tmp_rec == -1){
                         int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
@@ -3235,37 +3451,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                     else{
                         cond = Py_False;
                     }
-                }
-            //     if(core_main_file_flag){
-            //         int target_lineno = PyCode_Addr2Line(f->f_code,oparg);
-            //         //printf("[debug log] in %d %s:%d\n",opcode,current_file,current_lineno);
-            //         if(target_lineno > line_number + 1 || oparg < f->f_lasti){
-            //             cond = Py_False;
-            //             int tmp_cond;
-            //             if(PyObject_IsTrue(cond)){
-            //                 tmp_cond = 1;
-            //             }
-            //             else{
-            //                 tmp_cond = 0;
-            //             }
-            //             int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
-            //             if(tmp_rec == -1){
-            //                 int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
-            //             }
-            //             if (tmp_rec == 1){
-            //                 printf("[%5lu] cond is set to be true: %d\n",pid,current_lineno);
-            //                 cond = Py_True;
-            //             }
-            //             if (tmp_rec == 0){
-            //                 printf("[%5lu] cond is set to be false: %d\n",pid, current_lineno);
-            //                 cond = Py_False;
-            //             }
-            //         }
-            //         else{
-            //             printf("[%5lu] cond is moving backward: %d\n",pid,current_lineno);
-            //             cond = Py_True;
-            //         }
-            //     }
+                }   
             }
             //test instru ends
             if (cond == Py_True) {
@@ -3295,39 +3481,42 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             //test instru ends
             PyObject *cond = POP();
             int err;
-            // test instru begins
-            if(flag_main_file){
+            //test instru begins
+            if(core_main_file_flag){
                 int offset = INSTR_OFFSET();
-                //printf("pop_jump_if_true triggered in %s:%d instr:%d\n",current_file,current_lineno,offset);
-                int line_number = PyFrame_GetLineNumber(f);
-                if(core_main_file_flag){
-                    //printf("[debug log] in %d %s:%d\n",opcode,current_file,current_lineno);
-                    int target_lineno = PyCode_Addr2Line(f->f_code,oparg);
-                    //printf("target_lineno:%d    current_line:%d\n",target_lineno,line_number); 
-                    if((target_lineno > line_number + 1) || oparg < f->f_lasti){
+                int target_lineno = PyCode_Addr2Line(f->f_code,oparg);
+                int tmp_cond;
+                if(target_lineno < current_lineno){
+                    cond = Py_False;
+                    tmp_cond = 0;
+                    int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
+                    if(tmp_rec == -1){
+                        int tmp_fork_flag = fork(current_lineno + 1);
+                    }
+                    else if(tmp_rec == 1){
                         cond = Py_True;
-                        int tmp_cond;
-                        if(PyObject_IsTrue(cond)){
-                            tmp_cond = 1;
-                        }
-                        else{
-                            tmp_cond = 0;
-                        }
-                        int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
-                        if(tmp_rec == -1){
-                            int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
-                        }
-                        if (tmp_rec == 1){
-                            cond = Py_True;
-                        }
-                        if (tmp_rec == 0){
-                            cond = Py_False;
-                        }
                     }
                     else{
                         cond = Py_False;
                     }
                 }
+                else if(target_lineno == current_lineno){
+                    cond = Py_False;
+                }
+                else{
+                    cond = Py_True;
+                    tmp_cond = 1;
+                    int tmp_rec = write_one_fork_record_mem(current_file,offset,opcode,oparg,tmp_cond);
+                    if(tmp_rec == -1){
+                        int tmp_fork_flag = fork(PyCode_Addr2Line(f->f_code,oparg));
+                    }
+                    else if(tmp_rec == 1){
+                        cond = Py_True;
+                    }
+                    else{
+                        cond = Py_False;
+                    }
+                }   
             }
             //test instru ends
             if (cond == Py_False) {
@@ -3780,8 +3969,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 printf("[debug log] LOAD_METHOD error in %s:%d\n",current_file,current_lineno);
                 char meth_name[256];
                 get_object_name(name,meth_name);
-                sprintf_s(obj_name,512,"FakeObject_%s",meth_name);
-                meth = PyUnicode_FromString(obj_name);
+                meth = new_FakeObject_str(meth_name);
                 obj_name[0] = '\0';
                 SET_TOP(NULL);
                 Py_DECREF(obj);
@@ -3873,7 +4061,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if((res == NULL) && flag_call_function_from_main){
                 printf("[debug log] CALL_METHOD error %s:%d \n",current_file,current_lineno);
                 PyErr_Clear();
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
             PUSH(res);
@@ -3907,7 +4095,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if((res == NULL) && flag_call_function_from_main){
                 printf("[debug log] CALL_FUNCTION error %s:%d \n",current_file,current_lineno);
                 PyErr_Clear();
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -3945,7 +4133,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if((res == NULL) && flag_call_function_from_main){
                 printf("[debug log] CALL_FUNCTION_KW error %s:%d \n",current_file,current_lineno);
                 PyErr_Clear();
-                res = PyUnicode_FromString("FakeObject");
+                res = new_FakeObject_str("");
             }
             //test instru ends
 
@@ -4015,7 +4203,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
             if((result == NULL) && flag_call_function_from_main){
                 printf("[debug log] CALL_FUNCTION_EX error %s:%d \n",current_file,current_lineno);
                 PyErr_Clear();
-                result = PyUnicode_FromString("FakeObject");
+                result = new_FakeObject_str("");
             }
             //test instru ends
             Py_DECREF(func);
@@ -5434,15 +5622,14 @@ call_function(PyObject ***pp_stack, Py_ssize_t oparg, PyObject *kwnames)
 
         if(strstr(func_name,"FakeObject")){
             printf("[debug log] function: %s is a fake function in %s:%d, we directly return fake object\n",func_name,current_file,current_lineno);
-            sprintf_s(obj_name,512,"RET_%s",func_name);
-            PyObject *tmp_ret_obj = PyUnicode_FromString(obj_name);
+            PyObject *tmp_ret_obj = new_FakeObject_str("RET");
             obj_name[0] = '\0';
             return tmp_ret_obj;
         }
         else if (strstr(func_name,"built-in function input")){
             printf("[debug log] Input() is called in %s:%d, we directly return fake object\n",current_file,current_lineno);
             sprintf_s(obj_name,512,"RET_%s","FakeObject_input");
-            PyObject *tmp_ret_obj = PyUnicode_FromString(obj_name);
+            PyObject *tmp_ret_obj = new_FakeObject_str(obj_name);
             obj_name[0] = '\0';
             return tmp_ret_obj;
         }

@@ -92,6 +92,8 @@ int log_flag = 0;
 
 int cond_instru = 0;
 
+PyObject *FakeObject_dict = NULL;
+
 // int config[1024] = {
 //     0
 // };
@@ -108,8 +110,30 @@ int cond_instru = 0;
 // int instrulinenocount[1024] = {
 //     0
 // };
-
 char obj_name[512]="";
+
+
+
+
+PyObject *new_FakeObject_str(char *name){
+    sprintf(tmp_fake_object,"FakeObject_%s",name);
+    PyObject *tmp_new_FakeObject = PyUnicode_FromString(tmp_fake_object);
+    PyObject *tmp_attr_dict = PyDict_New();
+    int dict_flag = PyDict_SetItem(FakeObject_dict,tmp_new_FakeObject,tmp_attr_dict);
+    return tmp_new_FakeObject;
+}
+int FakeObject_setattr(PyObject * FakeObject, PyObject * key_object, PyObject *value_object){
+    PyObject *attr_dict = PyDict_GetItem(FakeObject_dict,FakeObject);
+    int dict_flag = PyDict_SetItem(attr_dict,key_object,value_object);
+    return dict_flag;
+}
+PyObject *FakeObject_getattr(PyObject * FakeObject, PyObject * key_object){
+    PyObject *attr_dict = PyDict_GetItem(FakeObject_dict,FakeObject);
+    PyObject *value_object = PyDict_GetItem(attr_dict,key_object);
+    return value_object;
+}
+
+
 
 char *get_object_name(PyObject *obj, char *output){
     PyObject *s = PyObject_Str(obj);
@@ -125,6 +149,28 @@ char *get_object_name(PyObject *obj, char *output){
 		strcpy(output,PyBytes_AS_STRING(t));
     }
     return output;
+}
+
+PyObject *new_FakeObject(PyObject *name){
+    get_object_name(name,obj_name);
+    sprintf(tmp_fake_object,"FakeObject_%s",obj_name);
+    PyObject *tmp_new_FakeObject = PyUnicode_FromString(tmp_fake_object);
+    PyObject *tmp_attr_dict = PyDict_New();
+    int dict_flag = PyDict_SetItem(FakeObject_dict,tmp_new_FakeObject,tmp_attr_dict);
+    obj_name[0] = '\0';
+    return tmp_new_FakeObject;
+}
+
+int is_FakeObject(PyObject * Object){
+    get_object_name(Object,obj_name);
+    if(strstr(obj_name,"FakeObject")){
+        obj_name[0] = '\0';
+        return 1;
+    }
+    else{
+        obj_name[0] = '\0';
+        return 0;
+    }
 }
 
 wchar_t wcstring[2048];
@@ -320,7 +366,7 @@ int fork(int merge_line){
         NULL,&StartupInfo,&ProcessInfo))
     {
         FILE * pFile2 = fopen(outlog, "a");
-        fprintf(pFile2,"[%5lu]: fork() %lu in line:%d\n",pid,ProcessInfo.dwProcessId,current_lineno);
+        fprintf(pFile2,"[%5lu]: fork() %lu in line:%d and merge line is %d\n",pid,ProcessInfo.dwProcessId,current_lineno,merge_line);
         fclose(pFile2);
         printf("[%lu debug log] we get a new process:  %lu\n",pid,ProcessInfo.dwProcessId);
         WaitForSingleObject( ProcessInfo.hProcess, INFINITE );
@@ -716,7 +762,7 @@ void branch_cut(){
         char merge_filename[1024];
         sprintf(merge_filename,"%sMergeFile%d",fork_record_folder,mergeline);
         int file_exist = file_exists(merge_filename);
-        if(flag_cut_branch == 1 && flag_last_record_used == 1){
+        if(flag_cut_branch == 1){
             printf("[%5lu debug log] we need to exit()\n",pid);
             FILE * pFile2 = fopen(outlog, "a");
             // if(pFile2 == NULL){
@@ -1170,6 +1216,10 @@ void check_scope(PyFrameObject *frame, int opcode){
     }
 
     if (!flag_main_file) {
+        if(FakeObject_dict == NULL){
+            FakeObject_dict = PyDict_New();
+            printf("[%5u debug log] FakeObject_dict has been created\n",pid);
+        }
         int tmp_flag = 0;
         char tmp_file_name[MAX_PATH];
         strcpy(tmp_file_name,current_file);
@@ -1455,251 +1505,297 @@ int execute_statement(char * statement, PyObject * globals, PyObject * locals) {
     }
 
 }
-// int instru_call_method(PyFrameObject * f, PyObject ** sp, int opcode, int oparg, PyObject * kwnames, PyObject * meth) {
-// 	//printf("get into instru_call_method\n");
-// 	//PyObject_Print(f, stdout, 0);
-// 	//printf("\n");
-// 	//printf("get after print instru_call_method\n");
-//     if(!flag_begin_log){
-//         return 0;
-//     }
-//     char filename[4096]
-//     char * filename = get_file_name(f);
-// 	//printf("get after get file_name\n");
-//     // printf("[debug log] [CALL_METHOD] filename:%s\n",filename);
-//     // fprintf(stdout,"[CALL_METHOD] lineno: %d, opcode: %d\n",PyFrame_GetLineNumber(f),opcode);
-//     // if(is_target_file(filename)){
-//     FILE * logfile = fopen(outlog,"a");
-//     //if(core_main_file_flag||strstr(filename,name_main_file)||(core_exec_flag&&strstr(filename,"<module>"))||(core_exec_flag&&strstr(filename,"<string>"))) {
-//     if(core_main_file_flag||strstr(filename,name_main_file)||core_exec_flag) {
-//         char *last_frame_name;
-//         PyObject *s_frame = PyObject_Str((PyObject *)(f->f_code->co_name));
-//         if (PyBytes_Check(s_frame)) {
-//         last_frame_name = PyBytes_AS_STRING(s_frame);
-//         }
-//         else if (PyUnicode_Check(s_frame)) {
-//             PyObject *t;
-//             t = PyUnicode_AsEncodedString(s_frame, "utf-8", "backslashreplace");
-//             last_frame_name = PyBytes_AS_STRING(t);
-//         }
-//         if (!meth == NULL) {
-//                 oparg = oparg + 1;
-//         }
-//         char *func_name = "tmp";
-//         PyObject **pfunc = (*&sp) - oparg - 1;
-//         PyObject *func = *pfunc;
-//         // printf("[debug log] -------------------\n");
 
-//         PyObject *s = PyObject_Str(func);
-//         if(s == NULL){
-//             printf("[debug log] NULL NULL\n");
-//             return 0;
-//         }
-//         if (PyBytes_Check(s)) {
-//             func_name = PyBytes_AS_STRING(s);
-//         }
-//         else if (PyUnicode_Check(s)) {
-//             PyObject *t;
-//             t = PyUnicode_AsEncodedString(s, "utf-8", "backslashreplace");
-//             func_name = PyBytes_AS_STRING(t);
-//         }
-//         Py_ssize_t nkwargs = 0;
-//         Py_ssize_t nargs = oparg - nkwargs;
-//         PyObject **stack = (*&sp) - nargs - nkwargs;
-//         Py_ssize_t arg_num = nargs;
-        
-//         //fprintf(logfile,"[%5lu]: %10s:%4d  %-10s %-20s  : ",pid,current_file,current_lineno,last_frame_name,func_name);
-//         char arg_full[409600]="";
-//         if(arg_num > 0){
-//             Py_ssize_t tmp_count = (Py_ssize_t)0;
-//             while(tmp_count < arg_num){
-//                 //printf("[debug log] we are trying to print function %s arg %d/%d\n",func_name,(int)tmp_count,(int)arg_num-1);
-//                 // fprintf(logfile,"[%lu instrument log] original arg[%d]: ",pid,(int)tmp_count);
-//                 char *arg = get_object_name(stack[tmp_count]);
-//                 strcat(arg_full,arg);
-//                 strcat(arg_full," ");
-//                 // PyObject_Print(stack[tmp_count],logfile,0);
-//                 // fprintf(logfile,"   ");
-//                 tmp_count = tmp_count + (Py_ssize_t)1; 
-//             }
-//             // fprintf(logfile,"[%lu instrument log] original arg[0]: ",pid);
-//             // PyObject_Print(stack[0],logfile,0);
-//             // fprintf(logfile,"\n");                 
-//         }
-//         fprintf(logfile,"[%5lu]: %10s:%4d  %-10s %-20s  : %s\n",pid,current_file,current_lineno,last_frame_name,func_name,arg_full);
-//         //fprintf(logfile,"\n");
-//         fclose(logfile);
-//         return 1;
-//     } else {
-//         fclose(logfile);
-//         return 0;
-//     }
+
+
+
+// belows are for the customized objects
+// #include "structmember.h"
+
+// typedef struct {
+//     PyObject_HEAD
+//     PyObject *first; /* first name */
+//     PyObject *last;  /* last name */
+//     int number;
+// } CustomObject;
+
+// static int
+// Custom_traverse(CustomObject *self, visitproc visit, void *arg)
+// {
+//     Py_VISIT(self->first);
+//     Py_VISIT(self->last);
+//     return 0;
 // }
 
-// char *opname(int opcode){
-//     char *opname;
-//     switch(opcode){
-//         case(1):{
-//             opname = "POP_TOP";
-//         }
-        
-//         case(2):{
-//             opname = "ROT_TWO";
-//         }
-        
-//         case(3):{
-//             opname = "ROT_THREE";
-//         }
-
-//         case(4):{
-//             opname = "DUP_TOP";
-//         }
-
-//         case(5):{
-//             opname = "DUP_TOP_TWO";
-//         }
-
-//         case(6):{
-//             opname = "ROT_FOUR";
-//         }
-        
-//         case(9):{
-//             opname = "NOP";
-//         }
-
-//         case(10):{
-//             opname = "UNARY_POSITRIVE";
-//         }
-
-//         case(11):{
-//             opname = "UNARY_NEGATIVE";
-//         }
-
-//         default:{
-//             opname = "unknown";
-//         }
-//     }
-//     return opname;
-    
+// static int
+// Custom_clear(CustomObject *self)
+// {
+//     Py_CLEAR(self->first);
+//     Py_CLEAR(self->last);
+//     return 0;
 // }
 
+// static void
+// Custom_dealloc(CustomObject *self)
+// {
+//     PyObject_GC_UnTrack(self);
+//     Custom_clear(self);
+//     Py_TYPE(self)->tp_free((PyObject *) self);
+// }
+
+// static PyObject *
+// Custom_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+// {
+//     CustomObject *self;
+//     self = (CustomObject *) type->tp_alloc(type, 0);
+//     if (self != NULL) {
+//         self->first = PyUnicode_FromString("");
+//         if (self->first == NULL) {
+//             Py_DECREF(self);
+//             return NULL;
+//         }
+//         self->last = PyUnicode_FromString("");
+//         if (self->last == NULL) {
+//             Py_DECREF(self);
+//             return NULL;
+//         }
+//         self->number = 0;
+//     }
+//     return (PyObject *) self;
+// }
+
+// static int
+// Custom_init(CustomObject *self, PyObject *args, PyObject *kwds)
+// {
+//     static char *kwlist[] = {"first", "last", "number", NULL};
+//     PyObject *first = NULL, *last = NULL, *tmp;
+
+//     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|UUi", kwlist,
+//                                      &first, &last,
+//                                      &self->number))
+//         return -1;
+
+//     if (first) {
+//         tmp = self->first;
+//         Py_INCREF(first);
+//         self->first = first;
+//         Py_DECREF(tmp);
+//     }
+//     if (last) {
+//         tmp = self->last;
+//         Py_INCREF(last);
+//         self->last = last;
+//         Py_DECREF(tmp);
+//     }
+//     return 0;
+// }
+
+// static PyMemberDef Custom_members[] = {
+//     {"number", T_INT, offsetof(CustomObject, number), 0,
+//      "custom number"},
+//     {NULL}  /* Sentinel */
+// };
+
+// static PyObject *
+// Custom_getfirst(CustomObject *self, void *closure)
+// {
+//     Py_INCREF(self->first);
+//     return self->first;
+// }
+
+// static int
+// Custom_setfirst(CustomObject *self, PyObject *value, void *closure)
+// {
+//     if (value == NULL) {
+//         PyErr_SetString(PyExc_TypeError, "Cannot delete the first attribute");
+//         return -1;
+//     }
+//     if (!PyUnicode_Check(value)) {
+//         PyErr_SetString(PyExc_TypeError,
+//                         "The first attribute value must be a string");
+//         return -1;
+//     }
+//     Py_INCREF(value);
+//     Py_CLEAR(self->first);
+//     self->first = value;
+//     return 0;
+// }
+
+// static PyObject *
+// Custom_getlast(CustomObject *self, void *closure)
+// {
+//     Py_INCREF(self->last);
+//     return self->last;
+// }
+
+// static int
+// Custom_setlast(CustomObject *self, PyObject *value, void *closure)
+// {
+//     if (value == NULL) {
+//         PyErr_SetString(PyExc_TypeError, "Cannot delete the last attribute");
+//         return -1;
+//     }
+//     if (!PyUnicode_Check(value)) {
+//         PyErr_SetString(PyExc_TypeError,
+//                         "The last attribute value must be a string");
+//         return -1;
+//     }
+//     Py_INCREF(value);
+//     Py_CLEAR(self->last);
+//     self->last = value;
+//     return 0;
+// }
+
+// static PyGetSetDef Custom_getsetters[] = {
+//     {"first", (getter) Custom_getfirst, (setter) Custom_setfirst,
+//      "first name", NULL},
+//     {"last", (getter) Custom_getlast, (setter) Custom_setlast,
+//      "last name", NULL},
+//     {NULL}  /* Sentinel */
+// };
+
+// static PyObject *
+// Custom_name(CustomObject *self, PyObject *Py_UNUSED(ignored))
+// {
+//     return PyUnicode_FromFormat("%S %S", self->first, self->last);
+// }
+
+// static PyMethodDef Custom_methods[] = {
+//     {"name", (PyCFunction) Custom_name, METH_NOARGS,
+//      "Return the name, combining the first and last name"
+//     },
+//     {NULL}  /* Sentinel */
+// };
+
+// static PyTypeObject CustomType = {
+//     PyVarObject_HEAD_INIT(NULL, 0)
+//     .tp_name = "custom.Custom",
+//     .tp_doc = "Custom objects",
+//     .tp_basicsize = sizeof(CustomObject),
+//     .tp_itemsize = 0,
+//     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+//     .tp_new = Custom_new,
+//     .tp_init = (initproc) Custom_init,
+//     .tp_dealloc = (destructor) Custom_dealloc,
+//     .tp_traverse = (traverseproc) Custom_traverse,
+//     .tp_clear = (inquiry) Custom_clear,
+//     .tp_members = Custom_members,
+//     .tp_methods = Custom_methods,
+//     .tp_getset = Custom_getsetters,
+// };
+
+// static PyModuleDef custommodule = {
+//     PyModuleDef_HEAD_INIT,
+//     .m_name = "custom",
+//     .m_doc = "Example module that creates an extension type.",
+//     .m_size = -1,
+// };
+
+// PyMODINIT_FUNC
+// PyInit_custom(void)
+// {
+//     PyObject *m;
+//     if (PyType_Ready(&CustomType) < 0)
+//         return NULL;
+
+//     m = PyModule_Create(&custommodule);
+//     if (m == NULL)
+//         return NULL;
+
+//     Py_INCREF(&CustomType);
+//     PyModule_AddObject(m, "Custom", (PyObject *) &CustomType);
+//     return m;
+// }
+
+
+
+//below are for new fake object
+// typedef struct {
+//     PyUnicodeObject unicode_obj;
+//     PyUnicodeObject *content;
+//     int state;
+// } FakeObject;
+
+// static PyObject *
+// FakeObject_increment(FakeObject *self, PyObject *unused)
+// {
+//     self->state++;
+//     return PyLong_FromLong(self->state);
+// }
+
+// static PyMethodDef FakeObject_methods[] = {
+//     {"increment", (PyCFunction) FakeObject_increment, METH_NOARGS,
+//      PyDoc_STR("increment state counter")},
+//     {NULL},
+// };
+
+// static int
+// FakeObject_init(FakeObject *self, PyObject *args, PyObject *kwds)
+// {
+//     if (PyUnicode_Type.tp_init((PyObject *) self, args, kwds) < 0){
+//         return -1;
+//     }
+//     self->state = 0;
+//     return 0;
+// }
+// static PyGetSetDef FakeObject_getsetlist[] = {
+//     {"__dict__", PyObject_GenericGetDict, PyObject_GenericSetDict},
+//     {NULL} /* Sentinel */
+// };
+// static PyObject *
+// FakeObject_descr_get(PyObject *func, PyObject *obj, PyObject *type)
+// {
+//     if (obj == Py_None || obj == NULL) {
+//         Py_INCREF(func);
+//         return func;
+//     }
+//     return PyMethod_New(func, obj);
+// }
+// static PyTypeObject FakeObjectType = {
+//     PyVarObject_HEAD_INIT(NULL, 0)
+//     .tp_name = "FakeObject.FakeObject",
+//     .tp_doc = "FakeObject for force execution",
+//     .tp_basicsize = sizeof(FakeObject),
+//     .tp_itemsize = 0,
+//     .tp_flags = Py_TPFLAGS_HEAPTYPE,
+//     .tp_init = (initproc) FakeObject_init,
+//     .tp_methods = FakeObject_methods,
+//     .tp_getset = FakeObject_getsetlist,
+//     .tp_descr_get = FakeObject_descr_get,
+// };
+// //|Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE
+// static PyModuleDef FakeObjectmodule = {
+//     PyModuleDef_HEAD_INIT,
+//     .m_name = "FakeObject Module",
+//     .m_doc = "Example module that creates FakeObject.",
+//     .m_size = -1,
+// };
+
+// PyMODINIT_FUNC
+// PyInit_FakeObject(void)
+// {
+//     PyObject *m;
+//     FakeObjectType.tp_base = &PyUnicode_Type;
+//     if (PyType_Ready(&PyUnicode_Type) < 0)
+//         return NULL;
+
+//     printf("FakeObject module is called\n");
+
+//     m = PyModule_Create(&FakeObjectmodule);
+//     if (m == NULL)
+//         return NULL;
+
+//     Py_INCREF(&FakeObjectType);
+//     if (PyModule_AddObject(m, "FakeObject", (PyObject *) &FakeObjectType) < 0) {
+//         Py_DECREF(&FakeObjectType);
+//         Py_DECREF(m);
+//         return NULL;
+//     }
+
+//     return m;
+// }
 #endif /* !Py_PYTHON_H */
 
-
-/*
-
-opname = "UNARY_NOT"                14
-opname = "UNARY_INVERT"             15
-opname = "BINARY_MATRIX_MULTIPLY"   16
-opname = "INPLACE_MATRIX_MULTIPLY"  17
-opname = "BINARY_POWER"             19
-opname = "BINARY_MULTIPLY"          20
-opname = "BINARY_MODULO"            22
-opname = "BINARY_ADD"               23
-opname = "BINARY_SUBTRACT"          24
-opname = "BINARY_SUBSCR"            25
-opname = "BINARY_FLOOR_DIVIDE"      26
-opname = "BINARY_TRUE_DIVIDE"       27
-opname = "INPLACE_FLOOR_DIVIDE"     28
-opname = "INPLACE_TRUE_DIVIDE"      29
-opname = "RERAISE"                  48
-opname = "WITH_EXCEPT_START"        49
-opname = "GET_AITER"                50
-opname = "GET_ANEXT"                51
-opname = "BEFORE_ASYNC_WITH"        52
-opname = "END_ASYNC_FOR"            54
-opname = "INPLACE_ADD"              55
-opname = "INPLACE_SUBTRACT"         56
-opname = "INPLACE_MULTIPLY"         57
-opname = "INPLACE_MODULO"           59
-opname = "STORE_SUBSCR"             60
-opname = "DELETE_SUBSCR"            61
-opname = "BINARY_LSHIFT"            62
-opname = "BINARY_RSHIFT"            63
-opname = "BINARY_AND"               64
-opname = "BINARY_XOR"               65
-opname = "BINARY_OR"                66
-opname = "INPLACE_POWER"            67
-opname = "GET_ITER"                 68
-opname = "GET_YIELD_FROM_ITER"      69
-opname = "PRINT_EXPR"               70
-opname = "LOAD_BUILD_CLASS"         71
-opname = "YIELD_FROM"               72
-opname = "GET_AWAITABLE"            73
-opname = "LOAD_ASSERTION_ERROR"     74
-opname = "INPLACE_LSHIFT"           75
-opname = "INPLACE_RSHIFT"           76
-opname = "INPLACE_AND"              77
-opname = "INPLACE_XOR"              78
-opname = "INPLACE_OR"               79
-opname = "LIST_TO_TUPLE"            82
-opname = "RETURN_VALUE"             83
-opname = "IMPORT_STAR"              84
-opname = "SETUP_ANNOTATIONS"        85
-opname = "YIELD_VALUE"              86
-opname = "POP_BLOCK"                87
-opname = "POP_EXCEPT"               89
-opname = "HAVE_ARGUMENT"            90
-opname = "STORE_NAME"               90
-opname = "DELETE_NAME"              91
-opname = "UNPACK_SEQUENCE"          92
-opname = "FOR_ITER"                 93
-opname = "UNPACK_EX"                94
-opname = "STORE_ATTR"               95
-opname = "DELETE_ATTR"              96
-opname = "STORE_GLOBAL"             97
-opname = "DELETE_GLOBAL"            98
-opname = "LOAD_CONST"              100
-opname = "LOAD_NAME"               101
-opname = "BUILD_TUPLE"             102
-opname = "BUILD_LIST"              103
-opname = "BUILD_SET"               104
-opname = "BUILD_MAP"               105
-opname = "LOAD_ATTR"               106
-opname = "COMPARE_OP"              107
-opname = "IMPORT_NAME"             108
-opname = "IMPORT_FROM"             109
-opname = "JUMP_FORWARD"            110
-opname = "JUMP_IF_FALSE_OR_POP"    111
-opname = "JUMP_IF_TRUE_OR_POP"     112
-opname = "JUMP_ABSOLUTE"           113
-opname = "POP_JUMP_IF_FALSE"       114
-opname = "POP_JUMP_IF_TRUE"        115
-opname = "LOAD_GLOBAL"             116
-opname = "IS_OP"                   117
-opname = "CONTAINS_OP"             118
-opname = "JUMP_IF_NOT_EXC_MATCH"   121
-opname = "SETUP_FINALLY"           122
-opname = "LOAD_FAST"               124
-opname = "STORE_FAST"              125
-opname = "DELETE_FAST"             126
-opname = "RAISE_VARARGS"           130
-opname = "CALL_FUNCTION"           131
-opname = "MAKE_FUNCTION"           132
-opname = "BUILD_SLICE"             133
-opname = "LOAD_CLOSURE"            135
-opname = "LOAD_DEREF"              136
-opname = "STORE_DEREF"             137
-opname = "DELETE_DEREF"            138
-opname = "CALL_FUNCTION_KW"        141
-opname = "CALL_FUNCTION_EX"        142
-opname = "SETUP_WITH"              143
-opname = "EXTENDED_ARG"            144
-opname = "LIST_APPEND"             145
-opname = "SET_ADD"                 146
-opname = "MAP_ADD"                 147
-opname = "LOAD_CLASSDEREF"         148
-opname = "SETUP_ASYNC_WITH"        154
-opname = "FORMAT_VALUE"            155
-opname = "BUILD_CONST_KEY_MAP"     156
-opname = "BUILD_STRING"            157
-opname = "LOAD_METHOD"             160
-opname = "CALL_METHOD"             161
-opname = "LIST_EXTEND"             162
-opname = "SET_UPDATE"              163
-opname = "DICT_MERGE"              164
-opname = "DICT_UPDATE"             165
-*/
 
 
 
