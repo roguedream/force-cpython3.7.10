@@ -38,7 +38,7 @@ int flag_iter = 0;
 char memory_folder[MAX_PATH];
 int flag_func_memory;
 
-int executed_lines[10000] = { 0 };
+int executed_lines[30000] = { 0 };
 int max_lineno = 0;
 int loop_limit = 50;
 int flag_in_loop = 0;
@@ -72,21 +72,22 @@ struct fork_record
 };
 
 struct force_func{
-    PyObject *func[256];
-    char *frame_name;
+    char func_name[256];
+    int index;
 };
+struct force_func func_list[1000];
 
-struct func_obj{
-    PyObject *func;
-    PyObject *args;
-    PyObject *ret_val;
-};
+// struct func_obj{
+//     PyObject *func;
+//     PyObject *args;
+//     PyObject *ret_val;
+// };
 
-struct func_obj func_record[1000] ={NULL};
+// struct func_obj func_record[1000] ={NULL};
 
 struct fork_record forkRecords[1000];
 
-struct force_func func_list[1000] = {NULL};
+
 
 int log_flag = 0;
 
@@ -116,10 +117,17 @@ char obj_name[512]="";
 
 
 PyObject *new_FakeObject_str(char *name){
-    sprintf(tmp_fake_object,"FakeObject_%s",name);
+    if(strstr(name,"FakeObject")){
+        sprintf(tmp_fake_object,"%s",name);
+    }
+    else{
+        sprintf(tmp_fake_object,"FakeObject_%s",name);
+    }
     PyObject *tmp_new_FakeObject = PyUnicode_FromString(tmp_fake_object);
-    PyObject *tmp_attr_dict = PyDict_New();
-    int dict_flag = PyDict_SetItem(FakeObject_dict,tmp_new_FakeObject,tmp_attr_dict);
+    // PyObject *tmp_attr_dict = PyDict_New();
+    // int dict_flag = PyDict_SetItem(FakeObject_dict,tmp_new_FakeObject,tmp_attr_dict);
+    // Py_XDECREF(tmp_new_FakeObject);
+    //Py_XDECREF(tmp_attr_dict);
     return tmp_new_FakeObject;
 }
 int FakeObject_setattr(PyObject * FakeObject, PyObject * key_object, PyObject *value_object){
@@ -148,16 +156,23 @@ char *get_object_name(PyObject *obj, char *output){
         t = PyUnicode_AsEncodedString(s, "utf-8", "backslashreplace");
 		strcpy(output,PyBytes_AS_STRING(t));
     }
+    //Py_XDECREF(s);
     return output;
 }
 
 PyObject *new_FakeObject(PyObject *name){
     get_object_name(name,obj_name);
-    sprintf(tmp_fake_object,"FakeObject_%s",obj_name);
+    if(strstr(obj_name,"FakeObject")){
+        sprintf(tmp_fake_object,"%s",obj_name);
+    }
+    else{
+        sprintf(tmp_fake_object,"FakeObject_%s",obj_name);
+    }
     PyObject *tmp_new_FakeObject = PyUnicode_FromString(tmp_fake_object);
-    PyObject *tmp_attr_dict = PyDict_New();
-    int dict_flag = PyDict_SetItem(FakeObject_dict,tmp_new_FakeObject,tmp_attr_dict);
+    // PyObject *tmp_attr_dict = PyDict_New();
+    // int dict_flag = PyDict_SetItem(FakeObject_dict,tmp_new_FakeObject,tmp_attr_dict);
     obj_name[0] = '\0';
+    //Py_XDECREF(tmp_attr_dict);
     return tmp_new_FakeObject;
 }
 
@@ -505,13 +520,12 @@ int dump_pair_disk(PyObject *name, PyObject *value){
     char filename[MAX_PATH] = "";
     sprintf(filename,"%s%s-%lu-%d.txt",object_dump_folder,"var",pid,mergeline);
     FILE *tmpfile_dump_obj = fopen(filename,"a");
-    char var_name[4096] = "";
-    char value_name[4096] = "";
-    get_object_name(name,var_name);
-    get_object_name(value,value_name);
-    fprintf(tmpfile_dump_obj,"[%d]  :  %s  :  %s\n",current_lineno,var_name,value_name);
+    fprintf(tmpfile_dump_obj,"-----------------------------------\n");
+    PyObject_Print(name,tmpfile_dump_obj,0);
+    fprintf(tmpfile_dump_obj,"\n");
+    PyObject_Print(value,tmpfile_dump_obj,0);
+    fprintf(tmpfile_dump_obj,"\n-----------------------------------\n");
     fclose(tmpfile_dump_obj);
-    //printf("dump_pair_disk out: %s:%s\n",var_name,value_name);
     return 1;
 }
 
@@ -773,10 +787,10 @@ void branch_cut(){
             int search_lineno = 0;
             fprintf(pFile2,"[%5lu]: Coverage: ",pid);
             //char full_coverage[4096];
-            while (lineno < (max_lineno + 1)){
+            while (lineno < 30000){
                 if(executed_lines[lineno]){
                     search_lineno = lineno + 1;
-                    while (executed_lines[search_lineno] && search_lineno < (max_lineno + 1)){
+                    while (executed_lines[search_lineno] && search_lineno < 30000){
                         search_lineno = search_lineno + 1;
                     }
                     if(lineno == (search_lineno - 1)){
@@ -1230,12 +1244,8 @@ void check_scope(PyFrameObject *frame, int opcode){
             //initialize func_list
             int index = 0;
             while(index < 1000){
-                int func_index = 0;
-                while(func_index<256){
-                    func_list[index].func[func_index] = NULL;
-                    func_index = func_index + 1;
-                }
-                func_list[index].frame_name = NULL;
+                func_list[index].index = 0;
+                func_list[index].func_name[0] = '\0';
                 index = index + 1;
             }
             //

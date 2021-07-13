@@ -25,7 +25,7 @@ extern char current_func[512];
 extern int flag_last_record_used;
 extern int fork_record_length;
 
-extern int executed_lines[10000];
+extern int executed_lines[30000];
 extern int max_lineno;
 
 extern int flag_cut_branch;

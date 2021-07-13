@@ -1712,12 +1712,12 @@ pymain_run_filename(_PyMain *pymain, PyCompilerFlags *cf)
             DWORD pid = GetCurrentProcessId();
             fprintf(logfile,"[%5lu]: Coverage: ",pid);
             //char full_coverage[4096]="";
-            while (lineno < (max_lineno + 1))
+            while (lineno < 30000)
             {
                 //printf("current lineno:%d\n",lineno);
                 if(executed_lines[lineno]){
                     search_lineno = lineno + 1;
-                    while (executed_lines[search_lineno] && search_lineno < (max_lineno + 1)){
+                    while (executed_lines[search_lineno] && search_lineno < 30000){
                         search_lineno = search_lineno + 1;
                     }
                     if(lineno == (search_lineno - 1)){
