@@ -1,0 +1,384 @@
+
+[instrument log]: logstart
+[484 instrument log]: CALL_METHOD:<function install_aliases at 0x000001DC6A1B7288> is to be called. Number of arguments: 0
+
+[instrument log]: logstart
+[1732 instrument log]: CALL_METHOD:<function install_aliases at 0x00000262DAB173A8> is to be called. Number of arguments: 0
+
+[instrument log]: logstart
+[4540 instrument log]: CALL_METHOD:<function install_aliases at 0x000001A2496B73A8> is to be called. Number of arguments: 0
+[4540 instrument log]: CALL_METHOD:<method 'extend' of 'list' objects> is to be called. Number of arguments: 2
+[4540 instrument log] original arg[0]: ['TestResult', 'TestCase', 'TestSuite', 'TextTestRunner', 'TestLoader', 'FunctionTestCase', 'main', 'defaultTestLoader', 'SkipTest', 'skip', 'skipIf', 'skipUnless', 'expectedFailure', 'TextTestResult', 'installHandler', 'registerResult', 'removeResult', 'removeHandler']
+[4540 instrument log] original arg[1]: ['getTestCaseNames', 'makeSuite', 'findTestCases']
+
+[instrument log]: logstart
+[4072 instrument log]: CALL_METHOD:<function install_aliases at 0x000002E9FBCE73A8> is to be called. Number of arguments: 0
+[4072 instrument log]: CALL_METHOD:<method 'extend' of 'list' objects> is to be called. Number of arguments: 2
+[4072 instrument log] original arg[0]: ['TestResult', 'TestCase', 'TestSuite', 'TextTestRunner', 'TestLoader', 'FunctionTestCase', 'main', 'defaultTestLoader', 'SkipTest', 'skip', 'skipIf', 'skipUnless', 'expectedFailure', 'TextTestResult', 'installHandler', 'registerResult', 'removeResult', 'removeHandler']
+[4072 instrument log] original arg[1]: ['getTestCaseNames', 'makeSuite', 'findTestCases']
+
+[instrument log]: logstart
+[6504 instrument log]: CALL_METHOD:<function install_aliases at 0x000001CDEB6C73A8> is to be called. Number of arguments: 0
+[6504 instrument log]: CALL_METHOD:<method 'extend' of 'list' objects> is to be called. Number of arguments: 2
+[6504 instrument log] original arg[0]: ['TestResult', 'TestCase', 'TestSuite', 'TextTestRunner', 'TestLoader', 'FunctionTestCase', 'main', 'defaultTestLoader', 'SkipTest', 'skip', 'skipIf', 'skipUnless', 'expectedFailure', 'TextTestResult', 'installHandler', 'registerResult', 'removeResult', 'removeHandler']
+[6504 instrument log] original arg[1]: ['getTestCaseNames', 'makeSuite', 'findTestCases']
+[6504 instrument log]: CALL_FUNCTION:<function namedtuple at 0x000001CDE9D033A8> is to be called. Number of arguments: 2
+[6504 instrument log] original arg[0]: 'Mismatch'
+[6504 instrument log] original arg[1]: 'actual expected value'
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TestResult at 0x000001CDEC23A318>
+[6504 instrument log] original arg[1]: 'TestResult'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<function failfast at 0x000001CDEB745048> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestResult.addError at 0x000001CDEC25A0D8>
+[6504 instrument log]: CALL_FUNCTION:<function wraps at 0x000001CDE9F71948> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestResult.addError at 0x000001CDEC25A0D8>
+[6504 instrument log]: CALL_FUNCTION:functools.partial(<function update_wrapper at 0x000001CDE9F0A708>, wrapped=<function TestResult.addError at 0x000001CDEC25A0D8>, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',)) is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function failfast.<locals>.inner at 0x000001CDEC25A168>
+[6504 instrument log]: CALL_FUNCTION:<function failfast at 0x000001CDEB745048> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestResult.addFailure at 0x000001CDEC25A1F8>
+[6504 instrument log]: CALL_FUNCTION:<function wraps at 0x000001CDE9F71948> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestResult.addFailure at 0x000001CDEC25A1F8>
+[6504 instrument log]: CALL_FUNCTION:functools.partial(<function update_wrapper at 0x000001CDE9F0A708>, wrapped=<function TestResult.addFailure at 0x000001CDEC25A1F8>, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',)) is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function failfast.<locals>.inner at 0x000001CDEC25A288>
+[6504 instrument log]: CALL_FUNCTION:<function failfast at 0x000001CDEB745048> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestResult.addUnexpectedSuccess at 0x000001CDEC25A558>
+[6504 instrument log]: CALL_FUNCTION:<function wraps at 0x000001CDE9F71948> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestResult.addUnexpectedSuccess at 0x000001CDEC25A558>
+[6504 instrument log]: CALL_FUNCTION:functools.partial(<function update_wrapper at 0x000001CDE9F0A708>, wrapped=<function TestResult.addUnexpectedSuccess at 0x000001CDEC25A558>, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',)) is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function failfast.<locals>.inner at 0x000001CDEC25A5E8>
+[6504 instrument log]: CALL_FUNCTION:<class 'object'> is to be called. Number of arguments: 0
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function SkipTest at 0x000001CDEC162A68>
+[6504 instrument log] original arg[1]: 'SkipTest'
+[6504 instrument log] original arg[2]: <class 'Exception'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _ShouldStop at 0x000001CDEC162A68>
+[6504 instrument log] original arg[1]: '_ShouldStop'
+[6504 instrument log] original arg[2]: <class 'Exception'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _UnexpectedSuccess at 0x000001CDEC162A68>
+[6504 instrument log] original arg[1]: '_UnexpectedSuccess'
+[6504 instrument log] original arg[2]: <class 'Exception'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _Outcome at 0x000001CDEC162A68>
+[6504 instrument log] original arg[1]: '_Outcome'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<function contextmanager at 0x000001CDEB04D558> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function _Outcome.testPartExecutor at 0x000001CDEC61C558>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 2
+[6504 instrument log] original arg[0]: <function _BaseTestCaseContext at 0x000001CDEC624D38>
+[6504 instrument log] original arg[1]: '_BaseTestCaseContext'
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _AssertRaisesBaseContext at 0x000001CDEC624D38>
+[6504 instrument log] original arg[1]: '_AssertRaisesBaseContext'
+[6504 instrument log] original arg[2]: <class 'unittest.case._BaseTestCaseContext'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _AssertRaisesContext at 0x000001CDEC624D38>
+[6504 instrument log] original arg[1]: '_AssertRaisesContext'
+[6504 instrument log] original arg[2]: <class 'unittest.case._AssertRaisesBaseContext'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _AssertWarnsContext at 0x000001CDEC624D38>
+[6504 instrument log] original arg[1]: '_AssertWarnsContext'
+[6504 instrument log] original arg[2]: <class 'unittest.case._AssertRaisesBaseContext'>
+[6504 instrument log]: CALL_METHOD:<function namedtuple at 0x000001CDE9D033A8> is to be called. Number of arguments: 2
+[6504 instrument log] original arg[0]: '_LoggingWatcher'
+[6504 instrument log] original arg[1]: ['records', 'output']
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _CapturingHandler at 0x000001CDEC63A5E8>
+[6504 instrument log] original arg[1]: '_CapturingHandler'
+[6504 instrument log] original arg[2]: <class 'logging.Handler'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _AssertLogsContext at 0x000001CDEC63A5E8>
+[6504 instrument log] original arg[1]: '_AssertLogsContext'
+[6504 instrument log] original arg[2]: <class 'unittest.case._BaseTestCaseContext'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _OrderedChainMap at 0x000001CDEC63A5E8>
+[6504 instrument log] original arg[1]: '_OrderedChainMap'
+[6504 instrument log] original arg[2]: <class 'collections.ChainMap'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TestCase at 0x000001CDEC63A5E8>
+[6504 instrument log] original arg[1]: 'TestCase'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<class 'classmethod'> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.setUpClass at 0x000001CDEC63AD38>
+[6504 instrument log]: CALL_FUNCTION:<class 'classmethod'> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.tearDownClass at 0x000001CDEC63ADC8>
+[6504 instrument log]: CALL_FUNCTION:<function contextmanager at 0x000001CDEB04D558> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.subTest at 0x000001CDEC6523A8>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertEqual at 0x000001CDEC652E58>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertNotEqual at 0x000001CDEC652EE8>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertAlmostEqual at 0x000001CDEC652F78>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertNotAlmostEqual at 0x000001CDEC65B048>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertTrue at 0x000001CDEC652A68>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertRaises at 0x000001CDEC652B88>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertFalse at 0x000001CDEC6529D8>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertRaisesRegex at 0x000001CDEC65BCA8>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertRegex at 0x000001CDEC65BDC8>
+[6504 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001CDEC65BEE8> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function TestCase.assertNotRegex at 0x000001CDEC65BE58>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function FunctionTestCase at 0x000001CDEC63A5E8>
+[6504 instrument log] original arg[1]: 'FunctionTestCase'
+[6504 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _SubTest at 0x000001CDEC63A5E8>
+[6504 instrument log] original arg[1]: '_SubTest'
+[6504 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function BaseTestSuite at 0x000001CDEC698CA8>
+[6504 instrument log] original arg[1]: 'BaseTestSuite'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TestSuite at 0x000001CDEC698CA8>
+[6504 instrument log] original arg[1]: 'TestSuite'
+[6504 instrument log] original arg[2]: <class 'unittest.suite.BaseTestSuite'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _ErrorHolder at 0x000001CDEC698CA8>
+[6504 instrument log] original arg[1]: '_ErrorHolder'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _DebugResult at 0x000001CDEC6A5CA8>
+[6504 instrument log] original arg[1]: '_DebugResult'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_METHOD:<function compile at 0x000001CDEA5240D8> is to be called. Number of arguments: 2
+[6504 instrument log] original arg[0]: '[_a-z]\\w*\\.py$'
+[6504 instrument log] original arg[1]: <RegexFlag.IGNORECASE: 2>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _FailedTest at 0x000001CDEC7D0438>
+[6504 instrument log] original arg[1]: '_FailedTest'
+[6504 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TestLoader at 0x000001CDEC7D0828>
+[6504 instrument log] original arg[1]: 'TestLoader'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<class 'staticmethod'> is to be called. Number of arguments: 1
+[6504 instrument log] original arg[0]: <function three_way_cmp at 0x000001CDEC23A678>
+[6504 instrument log]: CALL_FUNCTION:<class 'unittest.loader.TestLoader'> is to be called. Number of arguments: 0
+[6504 instrument log]: CALL_FUNCTION:<class 'super'> is to be called. Number of arguments: 2
+[6504 instrument log] original arg[0]: <class 'unittest.loader.TestLoader'>
+[6504 instrument log] original arg[1]: <unittest.loader.TestLoader object at 0x000001CDEC8C8A48>
+[6504 instrument log]: CALL_METHOD:<method-wrapper '__init__' of TestLoader object at 0x000001CDEC8C8A48> is to be called. Number of arguments: 0
+[6504 instrument log]: CALL_FUNCTION:<class 'set'> is to be called. Number of arguments: 0
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _InterruptHandler at 0x000001CDED2520D8>
+[6504 instrument log] original arg[1]: '_InterruptHandler'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_METHOD:<class 'weakref.WeakKeyDictionary'> is to be called. Number of arguments: 0
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function _WritelnDecorator at 0x000001CDEC987C18>
+[6504 instrument log] original arg[1]: '_WritelnDecorator'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TextTestResult at 0x000001CDEC987C18>
+[6504 instrument log] original arg[1]: 'TextTestResult'
+[6504 instrument log] original arg[2]: <class 'unittest.result.TestResult'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TextTestRunner at 0x000001CDEC987C18>
+[6504 instrument log] original arg[1]: 'TextTestRunner'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function TestProgram at 0x000001CDEC99D3A8>
+[6504 instrument log] original arg[1]: 'TestProgram'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function DumpSecrets at 0x000001CDED452318>
+[6504 instrument log] original arg[1]: 'DumpSecrets'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function Options at 0x000001CDED452318>
+[6504 instrument log] original arg[1]: 'Options'
+[6504 instrument log] original arg[2]: <class 'object'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function SecretsDumpTests at 0x000001CDED452318>
+[6504 instrument log] original arg[1]: 'SecretsDumpTests'
+[6504 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[6504 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[6504 instrument log] original arg[0]: <function Tests at 0x000001CDED452318>
+[6504 instrument log] original arg[1]: 'Tests'
+[6504 instrument log] original arg[2]: <class '__main__.SecretsDumpTests'>
+
+[instrument log]: logstart
+[5852 instrument log]: CALL_METHOD:<function install_aliases at 0x000001F53F3A73A8> is to be called. Number of arguments: 0
+[5852 instrument log]: CALL_METHOD:<method 'extend' of 'list' objects> is to be called. Number of arguments: 2
+[5852 instrument log] original arg[0]: ['TestResult', 'TestCase', 'TestSuite', 'TextTestRunner', 'TestLoader', 'FunctionTestCase', 'main', 'defaultTestLoader', 'SkipTest', 'skip', 'skipIf', 'skipUnless', 'expectedFailure', 'TextTestResult', 'installHandler', 'registerResult', 'removeResult', 'removeHandler']
+[5852 instrument log] original arg[1]: ['getTestCaseNames', 'makeSuite', 'findTestCases']
+[5852 instrument log]: CALL_FUNCTION:<function namedtuple at 0x000001F53D9E43A8> is to be called. Number of arguments: 2
+[5852 instrument log] original arg[0]: 'Mismatch'
+[5852 instrument log] original arg[1]: 'actual expected value'
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TestResult at 0x000001F53FF1A318>
+[5852 instrument log] original arg[1]: 'TestResult'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<function failfast at 0x000001F53F425048> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestResult.addError at 0x000001F53FF3A0D8>
+[5852 instrument log]: CALL_FUNCTION:<function wraps at 0x000001F53DC51948> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestResult.addError at 0x000001F53FF3A0D8>
+[5852 instrument log]: CALL_FUNCTION:functools.partial(<function update_wrapper at 0x000001F53DBEA708>, wrapped=<function TestResult.addError at 0x000001F53FF3A0D8>, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',)) is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function failfast.<locals>.inner at 0x000001F53FF3A168>
+[5852 instrument log]: CALL_FUNCTION:<function failfast at 0x000001F53F425048> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestResult.addFailure at 0x000001F53FF3A1F8>
+[5852 instrument log]: CALL_FUNCTION:<function wraps at 0x000001F53DC51948> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestResult.addFailure at 0x000001F53FF3A1F8>
+[5852 instrument log]: CALL_FUNCTION:functools.partial(<function update_wrapper at 0x000001F53DBEA708>, wrapped=<function TestResult.addFailure at 0x000001F53FF3A1F8>, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',)) is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function failfast.<locals>.inner at 0x000001F53FF3A288>
+[5852 instrument log]: CALL_FUNCTION:<function failfast at 0x000001F53F425048> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestResult.addUnexpectedSuccess at 0x000001F53FF3A558>
+[5852 instrument log]: CALL_FUNCTION:<function wraps at 0x000001F53DC51948> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestResult.addUnexpectedSuccess at 0x000001F53FF3A558>
+[5852 instrument log]: CALL_FUNCTION:functools.partial(<function update_wrapper at 0x000001F53DBEA708>, wrapped=<function TestResult.addUnexpectedSuccess at 0x000001F53FF3A558>, assigned=('__module__', '__name__', '__qualname__', '__doc__', '__annotations__'), updated=('__dict__',)) is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function failfast.<locals>.inner at 0x000001F53FF3A5E8>
+[5852 instrument log]: CALL_FUNCTION:<class 'object'> is to be called. Number of arguments: 0
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function SkipTest at 0x000001F53FE42A68>
+[5852 instrument log] original arg[1]: 'SkipTest'
+[5852 instrument log] original arg[2]: <class 'Exception'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _ShouldStop at 0x000001F53FE42A68>
+[5852 instrument log] original arg[1]: '_ShouldStop'
+[5852 instrument log] original arg[2]: <class 'Exception'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _UnexpectedSuccess at 0x000001F53FE42A68>
+[5852 instrument log] original arg[1]: '_UnexpectedSuccess'
+[5852 instrument log] original arg[2]: <class 'Exception'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _Outcome at 0x000001F53FE42A68>
+[5852 instrument log] original arg[1]: '_Outcome'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<function contextmanager at 0x000001F53ED2D558> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function _Outcome.testPartExecutor at 0x000001F5402FC558>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 2
+[5852 instrument log] original arg[0]: <function _BaseTestCaseContext at 0x000001F540304D38>
+[5852 instrument log] original arg[1]: '_BaseTestCaseContext'
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _AssertRaisesBaseContext at 0x000001F540304D38>
+[5852 instrument log] original arg[1]: '_AssertRaisesBaseContext'
+[5852 instrument log] original arg[2]: <class 'unittest.case._BaseTestCaseContext'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _AssertRaisesContext at 0x000001F540304D38>
+[5852 instrument log] original arg[1]: '_AssertRaisesContext'
+[5852 instrument log] original arg[2]: <class 'unittest.case._AssertRaisesBaseContext'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _AssertWarnsContext at 0x000001F540304D38>
+[5852 instrument log] original arg[1]: '_AssertWarnsContext'
+[5852 instrument log] original arg[2]: <class 'unittest.case._AssertRaisesBaseContext'>
+[5852 instrument log]: CALL_METHOD:<function namedtuple at 0x000001F53D9E43A8> is to be called. Number of arguments: 2
+[5852 instrument log] original arg[0]: '_LoggingWatcher'
+[5852 instrument log] original arg[1]: ['records', 'output']
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _CapturingHandler at 0x000001F54031A5E8>
+[5852 instrument log] original arg[1]: '_CapturingHandler'
+[5852 instrument log] original arg[2]: <class 'logging.Handler'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _AssertLogsContext at 0x000001F54031A5E8>
+[5852 instrument log] original arg[1]: '_AssertLogsContext'
+[5852 instrument log] original arg[2]: <class 'unittest.case._BaseTestCaseContext'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _OrderedChainMap at 0x000001F54031A5E8>
+[5852 instrument log] original arg[1]: '_OrderedChainMap'
+[5852 instrument log] original arg[2]: <class 'collections.ChainMap'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TestCase at 0x000001F54031A5E8>
+[5852 instrument log] original arg[1]: 'TestCase'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<class 'classmethod'> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.setUpClass at 0x000001F54031AD38>
+[5852 instrument log]: CALL_FUNCTION:<class 'classmethod'> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.tearDownClass at 0x000001F54031ADC8>
+[5852 instrument log]: CALL_FUNCTION:<function contextmanager at 0x000001F53ED2D558> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.subTest at 0x000001F5403323A8>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertEqual at 0x000001F540332E58>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertNotEqual at 0x000001F540332EE8>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertAlmostEqual at 0x000001F540332F78>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertNotAlmostEqual at 0x000001F54033B048>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertTrue at 0x000001F540332A68>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertRaises at 0x000001F540332B88>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertFalse at 0x000001F5403329D8>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertRaisesRegex at 0x000001F54033BCA8>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertRegex at 0x000001F54033BDC8>
+[5852 instrument log]: CALL_FUNCTION:<function TestCase._deprecate at 0x000001F54033BEE8> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function TestCase.assertNotRegex at 0x000001F54033BE58>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function FunctionTestCase at 0x000001F54031A5E8>
+[5852 instrument log] original arg[1]: 'FunctionTestCase'
+[5852 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _SubTest at 0x000001F54031A5E8>
+[5852 instrument log] original arg[1]: '_SubTest'
+[5852 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function BaseTestSuite at 0x000001F540378CA8>
+[5852 instrument log] original arg[1]: 'BaseTestSuite'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TestSuite at 0x000001F540378CA8>
+[5852 instrument log] original arg[1]: 'TestSuite'
+[5852 instrument log] original arg[2]: <class 'unittest.suite.BaseTestSuite'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _ErrorHolder at 0x000001F540378CA8>
+[5852 instrument log] original arg[1]: '_ErrorHolder'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _DebugResult at 0x000001F540385CA8>
+[5852 instrument log] original arg[1]: '_DebugResult'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_METHOD:<function compile at 0x000001F53E2040D8> is to be called. Number of arguments: 2
+[5852 instrument log] original arg[0]: '[_a-z]\\w*\\.py$'
+[5852 instrument log] original arg[1]: <RegexFlag.IGNORECASE: 2>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _FailedTest at 0x000001F5404B0438>
+[5852 instrument log] original arg[1]: '_FailedTest'
+[5852 instrument log] original arg[2]: <class 'unittest.case.TestCase'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TestLoader at 0x000001F5404B0828>
+[5852 instrument log] original arg[1]: 'TestLoader'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<class 'staticmethod'> is to be called. Number of arguments: 1
+[5852 instrument log] original arg[0]: <function three_way_cmp at 0x000001F53FF1A678>
+[5852 instrument log]: CALL_FUNCTION:<class 'unittest.loader.TestLoader'> is to be called. Number of arguments: 0
+[5852 instrument log]: CALL_FUNCTION:<class 'super'> is to be called. Number of arguments: 2
+[5852 instrument log] original arg[0]: <class 'unittest.loader.TestLoader'>
+[5852 instrument log] original arg[1]: <unittest.loader.TestLoader object at 0x000001F5405A8A08>
+[5852 instrument log]: CALL_METHOD:<method-wrapper '__init__' of TestLoader object at 0x000001F5405A8A08> is to be called. Number of arguments: 0
+[5852 instrument log]: CALL_FUNCTION:<class 'set'> is to be called. Number of arguments: 0
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _InterruptHandler at 0x000001F540F320D8>
+[5852 instrument log] original arg[1]: '_InterruptHandler'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_METHOD:<class 'weakref.WeakKeyDictionary'> is to be called. Number of arguments: 0
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function _WritelnDecorator at 0x000001F540667C18>
+[5852 instrument log] original arg[1]: '_WritelnDecorator'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TextTestResult at 0x000001F540667C18>
+[5852 instrument log] original arg[1]: 'TextTestResult'
+[5852 instrument log] original arg[2]: <class 'unittest.result.TestResult'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TextTestRunner at 0x000001F540667C18>
+[5852 instrument log] original arg[1]: 'TextTestRunner'
+[5852 instrument log] original arg[2]: <class 'object'>
+[5852 instrument log]: CALL_FUNCTION:<built-in function __build_class__> is to be called. Number of arguments: 3
+[5852 instrument log] original arg[0]: <function TestProgram at 0x000001F54067D3A8>
+[5852 instrument log] original arg[1]: 'TestProgram'
+[5852 instrument log] original arg[2]: <class 'object'>
+
+[instrument log]: logstart

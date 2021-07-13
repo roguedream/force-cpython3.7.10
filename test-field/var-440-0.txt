@@ -1,0 +1,337 @@
+[0]  :  __doc__  :  Core implementation of import.
+
+This module is NOT meant to be directly imported! It has been designed such
+that it can be bootstrapped into Python as the implementation of import. As
+such it requires the injection of specific modules and attributes in order to
+work. One should use importlib as the public-facing version of this module.
+
+
+[0]  :  _bootstrap_external  :  None
+[0]  :  _wrap  :  <function _wrap at 0x0000024207A9A048>
+[0]  :  _new_module  :  <function _new_module at 0x0000024207A9A0D8>
+[0]  :  _module_locks  :  {}
+[0]  :  _blocking_on  :  {}
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  _DeadlockError
+[0]  :  _DeadlockError  :  <class '_frozen_importlib._DeadlockError'>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  _ModuleLock
+[0]  :  __doc__  :  A recursive lock implementation which is able to detect deadlocks
+    (e.g. thread 1 trying to take locks A then B, and thread 2 trying to
+    take locks B then A).
+    
+[0]  :  __init__  :  <function _ModuleLock.__init__ at 0x0000024207A9A1F8>
+[0]  :  has_deadlock  :  <function _ModuleLock.has_deadlock at 0x0000024207A9A288>
+[0]  :  acquire  :  <function _ModuleLock.acquire at 0x0000024207A9A318>
+[0]  :  release  :  <function _ModuleLock.release at 0x0000024207A9A3A8>
+[0]  :  __repr__  :  <function _ModuleLock.__repr__ at 0x0000024207A9A438>
+[0]  :  _ModuleLock  :  <class '_frozen_importlib._ModuleLock'>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  _DummyModuleLock
+[0]  :  __doc__  :  A simple _ModuleLock equivalent for Python builds without
+    multi-threading support.
+[0]  :  __init__  :  <function _DummyModuleLock.__init__ at 0x0000024207A9A4C8>
+[0]  :  acquire  :  <function _DummyModuleLock.acquire at 0x0000024207A9A558>
+[0]  :  release  :  <function _DummyModuleLock.release at 0x0000024207A9A5E8>
+[0]  :  __repr__  :  <function _DummyModuleLock.__repr__ at 0x0000024207A9A678>
+[0]  :  _DummyModuleLock  :  <class '_frozen_importlib._DummyModuleLock'>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  _ModuleLockManager
+[0]  :  __init__  :  <function _ModuleLockManager.__init__ at 0x0000024207A9A708>
+[0]  :  __enter__  :  <function _ModuleLockManager.__enter__ at 0x0000024207A9A798>
+[0]  :  __exit__  :  <function _ModuleLockManager.__exit__ at 0x0000024207A9A828>
+[0]  :  _ModuleLockManager  :  <class '_frozen_importlib._ModuleLockManager'>
+[0]  :  _get_module_lock  :  <function _get_module_lock at 0x0000024207A9A168>
+[0]  :  _lock_unlock_module  :  <function _lock_unlock_module at 0x0000024207A9A8B8>
+[0]  :  _call_with_frames_removed  :  <function _call_with_frames_removed at 0x0000024207A9A948>
+[0]  :  _verbose_message  :  <function _verbose_message at 0x0000024207A9A9D8>
+[0]  :  _requires_builtin  :  <function _requires_builtin at 0x0000024207A9AA68>
+[0]  :  _requires_frozen  :  <function _requires_frozen at 0x0000024207A9AAF8>
+[0]  :  _load_module_shim  :  <function _load_module_shim at 0x0000024207A9AB88>
+[0]  :  _module_repr  :  <function _module_repr at 0x0000024207A9AC18>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  _installed_safely
+[0]  :  __init__  :  <function _installed_safely.__init__ at 0x0000024207A9AD38>
+[0]  :  __enter__  :  <function _installed_safely.__enter__ at 0x0000024207A9ADC8>
+[0]  :  __exit__  :  <function _installed_safely.__exit__ at 0x0000024207A9AE58>
+[0]  :  _installed_safely  :  <class '_frozen_importlib._installed_safely'>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  ModuleSpec
+[0]  :  __doc__  :  The specification for a module, used for loading.
+
+    A module's spec is the source for information about the module.  For
+    data associated with the module, including source, use the spec's
+    loader.
+
+    `name` is the absolute name of the module.  `loader` is the loader
+    to use when loading the module.  `parent` is the name of the
+    package the module is in.  The parent is derived from the name.
+
+    `is_package` determines if the module is considered a package or
+    not.  On modules this is reflected by the `__path__` attribute.
+
+    `origin` is the specific location used by the loader from which to
+    load the module, if that information is available.  When filename is
+    set, origin will match.
+
+    `has_location` indicates that a spec's "origin" reflects a location.
+    When this is True, `__file__` attribute of the module is set.
+
+    `cached` is the location of the cached bytecode file, if any.  It
+    corresponds to the `__cached__` attribute.
+
+    `submodule_search_locations` is the sequence of path entries to
+    search when importing submodules.  If set, is_package should be
+    True--and False otherwise.
+
+    Packages are simply modules that (may) have submodules.  If a spec
+    has a non-None value in `submodule_search_locations`, the import
+    system will consider modules loaded from the spec as packages.
+
+    Only finders (see importlib.abc.MetaPathFinder and
+    importlib.abc.PathEntryFinder) should modify ModuleSpec instances.
+
+    
+[0]  :  __init__  :  <function ModuleSpec.__init__ at 0x0000024207A9AEE8>
+[0]  :  __repr__  :  <function ModuleSpec.__repr__ at 0x0000024207A9AF78>
+[0]  :  __eq__  :  <function ModuleSpec.__eq__ at 0x0000024207AA2048>
+[0]  :  cached  :  <property object at 0x0000024207A9D7C8>
+[0]  :  cached  :  <property object at 0x0000024207A9D908>
+[0]  :  parent  :  <property object at 0x0000024207A9D9A8>
+[0]  :  has_location  :  <property object at 0x0000024207A9DA98>
+[0]  :  has_location  :  <property object at 0x0000024207A9DB38>
+[0]  :  ModuleSpec  :  <class '_frozen_importlib.ModuleSpec'>
+[0]  :  spec_from_loader  :  <function spec_from_loader at 0x0000024207A9ACA8>
+[0]  :  _spec_from_module  :  <function _spec_from_module at 0x0000024207AA23A8>
+[0]  :  _init_module_attrs  :  <function _init_module_attrs at 0x0000024207AA2438>
+[0]  :  module_from_spec  :  <function module_from_spec at 0x0000024207AA24C8>
+[0]  :  _module_repr_from_spec  :  <function _module_repr_from_spec at 0x0000024207AA2558>
+[0]  :  _exec  :  <function _exec at 0x0000024207AA25E8>
+[0]  :  _load_backward_compatible  :  <function _load_backward_compatible at 0x0000024207AA2678>
+[0]  :  _load_unlocked  :  <function _load_unlocked at 0x0000024207AA2708>
+[0]  :  _load  :  <function _load at 0x0000024207AA2798>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  BuiltinImporter
+[0]  :  __doc__  :  Meta path import for built-in modules.
+
+    All methods are either class or static methods to avoid the need to
+    instantiate the class.
+
+    
+[0]  :  module_repr  :  <staticmethod object at 0x0000024207AA0BC8>
+[0]  :  find_spec  :  <classmethod object at 0x0000024207AA0C88>
+[0]  :  find_module  :  <classmethod object at 0x0000024207AA0D48>
+[0]  :  create_module  :  <classmethod object at 0x0000024207AA0E08>
+[0]  :  exec_module  :  <classmethod object at 0x0000024207AA0EC8>
+[0]  :  _requires_builtin_wrapper  :  <function _requires_builtin.<locals>._requires_builtin_wrapper at 0x0000024207AA2C18>
+[0]  :  replace  :  __module__
+[0]  :  replace  :  __name__
+[0]  :  replace  :  __qualname__
+[0]  :  replace  :  __doc__
+[0]  :  get_code  :  <classmethod object at 0x0000024207AA4588>
+[0]  :  _requires_builtin_wrapper  :  <function _requires_builtin.<locals>._requires_builtin_wrapper at 0x0000024207AA2D38>
+[0]  :  replace  :  __module__
+[0]  :  replace  :  __name__
+[0]  :  replace  :  __qualname__
+[0]  :  replace  :  __doc__
+[0]  :  get_source  :  <classmethod object at 0x0000024207AA4C08>
+[0]  :  _requires_builtin_wrapper  :  <function _requires_builtin.<locals>._requires_builtin_wrapper at 0x0000024207AA2E58>
+[0]  :  replace  :  __module__
+[0]  :  replace  :  __name__
+[0]  :  replace  :  __qualname__
+[0]  :  replace  :  __doc__
+[0]  :  is_package  :  <classmethod object at 0x0000024207AA62C8>
+[0]  :  load_module  :  <classmethod object at 0x0000024207AA6388>
+[0]  :  BuiltinImporter  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  FrozenImporter
+[0]  :  __doc__  :  Meta path import for frozen modules.
+
+    All methods are either class or static methods to avoid the need to
+    instantiate the class.
+
+    
+[0]  :  module_repr  :  <staticmethod object at 0x0000024207AA66C8>
+[0]  :  find_spec  :  <classmethod object at 0x0000024207AA6788>
+[0]  :  find_module  :  <classmethod object at 0x0000024207AA6848>
+[0]  :  create_module  :  <classmethod object at 0x0000024207AA6908>
+[0]  :  exec_module  :  <staticmethod object at 0x0000024207AA69C8>
+[0]  :  load_module  :  <classmethod object at 0x0000024207AA6A88>
+[0]  :  _requires_frozen_wrapper  :  <function _requires_frozen.<locals>._requires_frozen_wrapper at 0x0000024207AA9318>
+[0]  :  replace  :  __module__
+[0]  :  replace  :  __name__
+[0]  :  replace  :  __qualname__
+[0]  :  replace  :  __doc__
+[0]  :  get_code  :  <classmethod object at 0x0000024207AAC148>
+[0]  :  _requires_frozen_wrapper  :  <function _requires_frozen.<locals>._requires_frozen_wrapper at 0x0000024207AA94C8>
+[0]  :  replace  :  __module__
+[0]  :  replace  :  __name__
+[0]  :  replace  :  __qualname__
+[0]  :  replace  :  __doc__
+[0]  :  get_source  :  <classmethod object at 0x0000024207AAC7C8>
+[0]  :  _requires_frozen_wrapper  :  <function _requires_frozen.<locals>._requires_frozen_wrapper at 0x0000024207AA9678>
+[0]  :  replace  :  __module__
+[0]  :  replace  :  __name__
+[0]  :  replace  :  __qualname__
+[0]  :  replace  :  __doc__
+[0]  :  is_package  :  <classmethod object at 0x0000024207AACE48>
+[0]  :  FrozenImporter  :  <class '_frozen_importlib.FrozenImporter'>
+[0]  :  __module__  :  _frozen_importlib
+[0]  :  __qualname__  :  _ImportLockContext
+[0]  :  __doc__  :  Context manager for the import lock.
+[0]  :  __enter__  :  <function _ImportLockContext.__enter__ at 0x0000024207AA9828>
+[0]  :  __exit__  :  <function _ImportLockContext.__exit__ at 0x0000024207AA98B8>
+[0]  :  _ImportLockContext  :  <class '_frozen_importlib._ImportLockContext'>
+[0]  :  _resolve_name  :  <function _resolve_name at 0x0000024207AA2828>
+[0]  :  _find_spec_legacy  :  <function _find_spec_legacy at 0x0000024207AA9948>
+[0]  :  _find_spec  :  <function _find_spec at 0x0000024207AA99D8>
+[0]  :  _sanity_check  :  <function _sanity_check at 0x0000024207AA9A68>
+[0]  :  _ERR_MSG_PREFIX  :  No module named 
+[0]  :  _ERR_MSG  :  No module named {!r}
+[0]  :  _find_and_load_unlocked  :  <function _find_and_load_unlocked at 0x0000024207AA9AF8>
+[0]  :  _NEEDS_LOADING  :  <object object at 0x0000024207A87060>
+[0]  :  _find_and_load  :  <function _find_and_load at 0x0000024207AA9B88>
+[0]  :  _gcd_import  :  <function _gcd_import at 0x0000024207AA9C18>
+[0]  :  _handle_fromlist  :  <function _handle_fromlist at 0x0000024207AA9CA8>
+[0]  :  _calc___package__  :  <function _calc___package__ at 0x0000024207AA9D38>
+[0]  :  __import__  :  <function __import__ at 0x0000024207AA9DC8>
+[0]  :  _builtin_from_name  :  <function _builtin_from_name at 0x0000024207AA9E58>
+[0]  :  _setup  :  <function _setup at 0x0000024207AA9EE8>
+[0]  :  _install  :  <function _install at 0x0000024207AA9F78>
+[0]  :  _install_external_importers  :  <function _install_external_importers at 0x0000024207AB0048>
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  _imp
+[0]  :  _imp  :  <module '_imp'>
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  sys
+[0]  :  sys  :  <module 'sys'>
+[0]  :  module_type  :  <class 'module'>
+[0]  :  name  :  sys
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  sys
+[0]  :  module  :  <module 'sys'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  spec  :  None
+[0]  :  name  :  sys
+[0]  :  location  :  None
+[0]  :  origin  :  None
+[0]  :  cached  :  None
+[0]  :  submodule_search_locations  :  None
+[0]  :  args  :  ["name='sys'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='sys', loader=<class '_frozen_importlib.BuiltinImporter'>)
+[0]  :  args  :  ["name='sys'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='sys', loader=<class '_frozen_importlib.BuiltinImporter'>)
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  name  :  builtins
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  builtins
+[0]  :  module  :  <module 'builtins'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  spec  :  None
+[0]  :  name  :  builtins
+[0]  :  location  :  None
+[0]  :  origin  :  None
+[0]  :  cached  :  None
+[0]  :  submodule_search_locations  :  None
+[0]  :  args  :  ["name='builtins'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>)
+[0]  :  args  :  ["name='builtins'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>)
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  name  :  _frozen_importlib
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  _frozen_importlib
+[0]  :  module  :  <module '_frozen_importlib'>
+[0]  :  loader  :  <class '_frozen_importlib.FrozenImporter'>
+[0]  :  spec  :  None
+[0]  :  name  :  _frozen_importlib
+[0]  :  location  :  None
+[0]  :  origin  :  None
+[0]  :  cached  :  None
+[0]  :  submodule_search_locations  :  None
+[0]  :  args  :  ["name='_frozen_importlib'", "loader=<class '_frozen_importlib.FrozenImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_frozen_importlib', loader=<class '_frozen_importlib.FrozenImporter'>)
+[0]  :  args  :  ["name='_frozen_importlib'", "loader=<class '_frozen_importlib.FrozenImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_frozen_importlib', loader=<class '_frozen_importlib.FrozenImporter'>)
+[0]  :  loader  :  <class '_frozen_importlib.FrozenImporter'>
+[0]  :  name  :  _imp
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  _imp
+[0]  :  module  :  <module '_imp'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  spec  :  None
+[0]  :  name  :  _imp
+[0]  :  location  :  None
+[0]  :  origin  :  None
+[0]  :  cached  :  None
+[0]  :  submodule_search_locations  :  None
+[0]  :  args  :  ["name='_imp'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_imp', loader=<class '_frozen_importlib.BuiltinImporter'>)
+[0]  :  args  :  ["name='_imp'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_imp', loader=<class '_frozen_importlib.BuiltinImporter'>)
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  loader  :  <class '_frozen_importlib.FrozenImporter'>
+[0]  :  self_module  :  <module '_frozen_importlib' (frozen)>
+[0]  :  builtin_name  :  _thread
+[0]  :  is_package  :  False
+[0]  :  args  :  ["name='_thread'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_thread', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in')
+[0]  :  module  :  None
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  _thread
+[0]  :  module  :  <module '_thread'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  module  :  <module '_thread' (built-in)>
+[0]  :  args  :  ["name='_thread'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_thread', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in')
+[0]  :  arg  :  None
+[0]  :  arg  :  None
+[0]  :  arg  :  None
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  builtin_module  :  <module '_thread' (built-in)>
+[0]  :  builtin_name  :  _warnings
+[0]  :  is_package  :  False
+[0]  :  args  :  ["name='_warnings'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_warnings', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in')
+[0]  :  module  :  None
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  _warnings
+[0]  :  module  :  <module '_warnings'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  module  :  <module '_warnings' (built-in)>
+[0]  :  args  :  ["name='_warnings'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_warnings', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in')
+[0]  :  arg  :  None
+[0]  :  arg  :  None
+[0]  :  arg  :  None
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  builtin_module  :  <module '_warnings' (built-in)>
+[0]  :  builtin_name  :  _weakref
+[0]  :  is_package  :  False
+[0]  :  args  :  ["name='_weakref'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_weakref', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in')
+[0]  :  module  :  None
+[0]  :  loader  :  None
+[0]  :  spec  :  None
+[0]  :  name  :  _weakref
+[0]  :  module  :  <module '_weakref'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  module  :  <module '_weakref' (built-in)>
+[0]  :  args  :  ["name='_weakref'", "loader=<class '_frozen_importlib.BuiltinImporter'>"]
+[0]  :  spec  :  ModuleSpec(name='_weakref', loader=<class '_frozen_importlib.BuiltinImporter'>, origin='built-in')
+[0]  :  arg  :  None
+[0]  :  arg  :  None
+[0]  :  arg  :  None
+[0]  :  loader  :  <class '_frozen_importlib.BuiltinImporter'>
+[0]  :  builtin_module  :  <module '_weakref' (built-in)>
