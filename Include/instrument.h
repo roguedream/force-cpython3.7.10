@@ -15,10 +15,12 @@ int flag_main_file = 0;
 int core_main_file_flag = 0;
 int core_exec_flag = 0;
 int flag_control_mode = 0;
+
 int current_lineno = 0;
 char current_file[MAX_PATH];
 // char *current_filename ="";
 char current_frame[512]="";
+
 int last_line_main = 0;
 char last_file_name_main[MAX_PATH];
 int flag_config_loaded = 0;
@@ -55,6 +57,8 @@ int last_record_lineno = 0;
 
 int flag_last_record_used = 0;
 int fork_record_length = 0;
+char merge_frame_name[512] ="";
+
 
 char current_import_module[256] = "";
 char tmp_fake_object[512] = "";
@@ -428,6 +432,7 @@ int write_one_fork_record_mem(char *filename,int linenumber, int opcode, int opa
             if(i == (fork_record_length - 1)){
                 printf("last record is used\n");
                 flag_last_record_used = 1;
+                strcpy(merge_frame_name,current_frame);
             }
             return forkRecords[i].cond;
         }
@@ -783,7 +788,7 @@ void load_configuration(){
     
 }
 void branch_cut(){
-    if(last_line_main > mergeline && flag_last_record_used){
+    if(last_line_main > mergeline && flag_last_record_used && strstr(current_frame,merge_frame_name)){
         char merge_filename[1024];
         sprintf(merge_filename,"%sMergeFile%d",fork_record_folder,mergeline);
         int file_exist = file_exists(merge_filename);
