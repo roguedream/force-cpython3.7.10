@@ -82,33 +82,33 @@ print(f())
 #     print(a)
 # print(a)
 
-# a = 1
-# if(a == 0):
-#     print("1 branch 1")
-#     print("1 branch 1 - 2")
-#     if(a ==1):
-#         print("1 branch 2")
-#         print("1 branch 2 - 2")
-#         if(a == 2):
-#             print("1 branch 3")
-#             print("1 branch 3 - 2")
-#         else:
-#             print("1 branch 3 else")
-#             print("1 branch 3 else - 2")
-#     else:
-#         print("1 branch 2 else")
-#         print("1 branch 2 else - 2")
-# else:
-#     print("1 branch 1 else")
-#     if(a == 4):
-#         print("1 branch 4")
-#     else:
-#         print("1 branch 4 else")
-#         print("1 branch 4 else - 2")
+a = 1
+if(a == 0):
+    print("1 branch 1")
+    print("1 branch 1 - 2")
+    if(a ==1):
+        print("1 branch 2")
+        print("1 branch 2 - 2")
+        if(a == 2):
+            print("1 branch 3")
+            print("1 branch 3 - 2")
+        else:
+            print("1 branch 3 else")
+            print("1 branch 3 else - 2")
+    else:
+        print("1 branch 2 else")
+        print("1 branch 2 else - 2")
+else:
+    print("1 branch 1 else")
+    if(a == 4):
+        print("1 branch 4")
+    else:
+        print("1 branch 4 else")
+        print("1 branch 4 else - 2")
 
-# print("cut here")
-# # print("aaaaaaaaaaaaaa")
-# print("this should only be once")
+print("cut here")
+# print("aaaaaaaaaaaaaa")
+print("this should only be once")
 
 # 1           0 LOAD_CONST               0 (1)
 #               2 STORE_NAME               0 (a)

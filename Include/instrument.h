@@ -707,15 +707,26 @@ void add_pip(){
     strcat(py_sys_path,buffer);
     strcat(py_sys_path,";");
 
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\python37.zip;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\DLLs;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\fastecdsa-2.1.6-py3.7-win-amd64.egg;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\win32;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\win32\\lib;");
-    strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\Pythonwin;");
+
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\python37.zip;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\DLLs;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\fastecdsa-2.1.6-py3.7-win-amd64.egg;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\win32;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\win32\\lib;");
+    // strcat(py_sys_path,"C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\Pythonwin;");
+
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\python37.zip;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\DLLs;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\lib;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\fastecdsa-2.1.6-py3.7-win-amd64.egg;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\win32;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\win32\\lib;");
+    strcat(py_sys_path,"C:\\Users\\99351\\AppData\\Local\\Programs\\Python\\Python37\\lib\\site-packages\\Pythonwin;");
     
     strcat(py_sys_path,python_folder);
     strcat(py_sys_path,";");
