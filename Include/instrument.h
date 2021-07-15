@@ -783,7 +783,7 @@ void load_configuration(){
     
 }
 void branch_cut(){
-    if(last_line_main > mergeline){
+    if(last_line_main > mergeline && flag_last_record_used){
         char merge_filename[1024];
         sprintf(merge_filename,"%sMergeFile%d",fork_record_folder,mergeline);
         int file_exist = file_exists(merge_filename);
